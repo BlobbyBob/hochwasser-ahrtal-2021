@@ -13,7 +13,7 @@ export default class Ahr extends Vue {
 <style scoped>
 .ahr {
   fill: none;
-  stroke: #a8d1de;
+  stroke: #98c9dc;
   stroke-width: 8;
   stroke-linecap: round;
   stroke-linejoin: round;

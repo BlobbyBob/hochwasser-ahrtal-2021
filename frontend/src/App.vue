@@ -6,8 +6,10 @@
       </h1>
     </div>
   </div>
-  <div class="container">
-    <router-view/>
+  <div id="content">
+    <div class="container">
+      <router-view/>
+    </div>
   </div>
 </template>
 
@@ -44,5 +46,15 @@
 body {
   padding: 0;
   margin: 0;
+}
+
+#content {
+  background-color: tomato;
+  width: 100%;
+  min-height: calc(100vh - 6em);
+
+  .container {
+    background-color: whitesmoke;
+  }
 }
 </style>

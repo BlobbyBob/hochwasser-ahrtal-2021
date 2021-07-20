@@ -2,6 +2,7 @@ import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 import Home from '@/views/Home.vue'
 import Map from '@/views/Map.vue'
 import Town from '@/views/Town.vue'
+import { getTowns } from '@/api'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -12,7 +13,10 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/karte',
     name: 'Karte',
-    component: Map
+    component: Map,
+    props: {
+      towns: getTowns()
+    }
   },
   {
     path: '/ort/:name',

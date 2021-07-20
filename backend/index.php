@@ -19,6 +19,15 @@ function getPDO(): PDO
 
 $app = AppFactory::create();
 
+// todo this CORS workaround is only for development. Remove in production
+$app->add(function ($request, $handler) {
+    $response = $handler->handle($request);
+    return $response
+        ->withHeader('Access-Control-Allow-Origin', '*')
+        ->withHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept, Origin')
+        ->withHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
+});
+
 $app->addErrorMiddleware(false, true, true);
 
 // todo get/post on / returns index.html

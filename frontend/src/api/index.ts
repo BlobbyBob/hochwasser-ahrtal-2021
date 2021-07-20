@@ -6,20 +6,25 @@ export class TownData {
   y!: number
 }
 
-export function getTowns (): TownData[] {
-  const schuld = new TownData()
-  schuld.id = 1
-  schuld.name = 'Schuld'
-  schuld.route = 'schuld'
-  schuld.x = 780
-  schuld.y = 630
+export class MediaData {
+  id!: number
+  town!: number
+  latitude!: number
+  longitude!: number
+  type!: 'twitter' | 'reddit' | 'youtube' | 'iframe'
+  data!: string
+}
 
-  const insul = new TownData()
-  insul.id = 2
-  insul.name = 'Insul'
-  insul.route = 'insul'
-  insul.x = 855
-  insul.y = 650
+const apiUrl = 'http://hochwasser.local/api'
 
-  return [schuld, insul]
+export async function getTowns (): Promise<TownData[]> {
+  return fetch(apiUrl + '/towns').then(response => response.json())
+}
+
+export async function getTown (id: number): Promise<TownData> {
+  return fetch(apiUrl + '/town/' + id).then(response => response.json())
+}
+
+export async function getMedia (id: number): Promise<MediaData[]> {
+  return fetch(apiUrl + '/media/' + id).then(response => response.json())
 }

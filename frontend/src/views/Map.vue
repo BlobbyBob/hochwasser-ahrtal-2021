@@ -4,7 +4,8 @@
     <div class="map">
       <svg viewBox="0 0 2189 1056" xmlns="http://www.w3.org/2000/svg">
         <Ahr/>
-        <MapMarker v-for="town of towns" v-bind:key="town" :route="town.route" position="right" :x="town.x" :y="town.y">
+        <MapMarker v-for="town of computedTowns" v-bind:key="town"
+                   :route="town.route" position="right" :x="town.x" :y="town.y">
           {{ town.name }}
         </MapMarker>
       </svg>
@@ -16,7 +17,7 @@
 import { Options, Vue } from 'vue-class-component'
 import Ahr from '@/components/Ahr.vue'
 import MapMarker from '@/components/MapMarker.vue'
-import { TownData } from '@/api'
+import { getTowns, TownData } from '@/api'
 
 @Options({
   components: {
@@ -24,11 +25,28 @@ import { TownData } from '@/api'
     Ahr
   },
   props: {
-    towns: Array
+    towns: {
+      type: Array
+    }
   }
 })
 export default class Map extends Vue {
   towns!: TownData[]
+  internalTowns: TownData[] = []
+
+  beforeCreate (): void {
+    if (this.towns.length > 0) {
+      this.internalTowns = this.towns
+    } else {
+      getTowns().then(t => {
+        this.internalTowns = t
+      })
+    }
+  }
+
+  get computedTowns (): TownData[] {
+    return this.internalTowns
+  }
 }
 </script>
 

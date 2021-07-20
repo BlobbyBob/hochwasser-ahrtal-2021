@@ -1,6 +1,6 @@
 <template>
-  <div class="youtubeEmbed">
-    <iframe width="560" height="315" :src="url" allow="encrypted-media; picture-in-picture" allowfullscreen></iframe>
+  <div class="youtubeEmbed ratio ratio-16x9">
+    <iframe :src="url" allow="encrypted-media; picture-in-picture" allowfullscreen></iframe>
   </div>
 </template>
 

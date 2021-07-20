@@ -35,4 +35,7 @@ export default class MapMarker extends Vue {
 circle {
   fill: red;
 }
+a {
+  text-decoration: none;
+}
 </style>

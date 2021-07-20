@@ -1,10 +1,14 @@
 <template>
   <div class="title">
-    <h1>
-      <router-link to="/">Hochwasser Ahrtal 2021</router-link>
-    </h1>
+    <div class="container">
+      <h1>
+        <router-link to="/">Hochwasser Ahrtal 2021</router-link>
+      </h1>
+    </div>
   </div>
-  <router-view/>
+  <div class="container">
+    <router-view/>
+  </div>
 </template>
 
 <style lang="scss">
@@ -24,6 +28,8 @@
   width: 100%;
   background-color: aliceblue;
   text-align: center;
+  padding-top: 2em;
+  padding-bottom: 1em;
 
   h1 {
     font-size: 2em;

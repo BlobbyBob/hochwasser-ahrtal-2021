@@ -4,3 +4,5 @@ declare module '*.vue' {
   const component: DefineComponent<{}, {}, any>
   export default component
 }
+
+declare module '@dvuckovic/vue3-bootstrap-icons'

@@ -32,6 +32,8 @@
       <YoutubeEmbed url="https://www.youtube-nocookie.com/embed/QnCHhE8cYHE?start=15"/>
     </ModalBody>
   </Modal>
+
+  <TownMap :internal-town-name="currentRoute.params.name"></TownMap>
 </template>
 
 <script lang="ts">
@@ -45,9 +47,11 @@ import TwitterEmbed from '@/components/TwitterEmbed.vue'
 import RedditEmbed from '@/components/RedditEmbed.vue'
 import IFrameEmbed from '@/components/IFrameEmbed.vue'
 import YoutubeEmbed from '@/components/YoutubeEmbed.vue'
+import TownMap from '@/components/TownMap.vue'
 
 @Options({
   components: {
+    TownMap,
     YoutubeEmbed,
     IFrameEmbed,
     RedditEmbed,
@@ -56,6 +60,9 @@ import YoutubeEmbed from '@/components/YoutubeEmbed.vue'
     ModalBody,
     ModalHeader,
     Modal
+  },
+  props: {
+    townName: String
   }
 })
 export default class Town extends Vue {

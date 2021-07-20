@@ -27,7 +27,7 @@ import { Options, Vue } from 'vue-class-component'
 })
 export default class Modal extends Vue {
   id!: string
-  size!: string
+  size!: 'sm' | 'md' | 'lg' | 'xl'
   minHeight!: boolean
 }
 </script>

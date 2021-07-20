@@ -1,9 +1,14 @@
 <template>
   <div class="title">
-    <div class="container">
+    <div class="container d-flex align-items-center justify-content-between">
       <h1>
         <router-link to="/">Hochwasser Ahrtal 2021</router-link>
       </h1>
+      <div class="social">
+        <a href="https://github.com/BlobbyBob/hochwasser-ahrtal-2021" target="_blank">
+          <BootstrapIcon icon="github" size="3x"/>
+        </a>
+      </div>
     </div>
   </div>
   <div id="content">
@@ -12,6 +17,17 @@
     </div>
   </div>
 </template>
+
+<script lang="ts">
+import { Options, Vue } from 'vue-class-component'
+import BootstrapIcon from '@dvuckovic/vue3-bootstrap-icons'
+
+@Options({
+  components: { BootstrapIcon }
+})
+export default class App extends Vue {
+}
+</script>
 
 <style lang="scss">
 #app {
@@ -29,16 +45,31 @@
 .title {
   width: 100%;
   background-color: aliceblue;
-  text-align: center;
-  padding-top: 2em;
-  padding-bottom: 1em;
 
   h1 {
     font-size: 2em;
+    float: left;
+    padding: 1em;
+    margin: 0;
 
     a {
       text-decoration: inherit;
       color: inherit;
+    }
+  }
+
+  .social {
+    margin-right: 1em;
+
+    a {
+      text-decoration: inherit;
+      color: inherit;
+      padding: 5px;
+
+      :hover {
+        color: darkblue;
+        transition: color 1s ease-out;
+      }
     }
   }
 }

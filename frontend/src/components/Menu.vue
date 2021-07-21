@@ -7,8 +7,7 @@
         </router-link>
       </div>
       <div>
-        <a @click="history.back" class="pe-auto">
-<!--          <BootstrapIcon icon="caret-left-fill"/>-->
+        <a @click="back" class="pe-auto">
           <BootstrapIcon icon="chevron-left" size="1x" class="pr-3"/>
           Zurück zur Karte
         </a>
@@ -25,6 +24,9 @@ import BootstrapIcon from '@dvuckovic/vue3-bootstrap-icons'
   components: { BootstrapIcon }
 })
 export default class Menu extends Vue {
+  back (): void {
+    history.back()
+  }
 }
 </script>
 

@@ -1,5 +1,4 @@
 <template>
-  <h3>{{ internalTownName }}</h3>
   <div id="mapContainer" style="height: 70vh"></div>
 </template>
 

@@ -27,7 +27,4 @@ export default class Introduction extends Vue {
 </script>
 
 <style scoped lang="scss">
-.mapLink {
-  text-align: center;
-}
 </style>

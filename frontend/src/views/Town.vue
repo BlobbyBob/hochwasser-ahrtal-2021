@@ -1,39 +1,51 @@
 <template>
-  <div class="town">
-    <h1>This is the town page for {{ currentRoute.params.name }}</h1>
-    <ModalLink target="#tc"><a class="">Twitter</a></ModalLink><br>
-    <ModalLink target="#rc"><a class="">Reddit</a></ModalLink><br>
-    <ModalLink target="#ic"><a class="">IFrame</a></ModalLink><br>
-    <ModalLink target="#yc"><a class="">YouTube</a></ModalLink>
-  </div>
-  <Modal id="tc" size="lg">
-    <ModalHeader>EPA@Twitter</ModalHeader>
-    <ModalBody>
-      <TwitterEmbed tweet="1416069093975859211"/>
-    </ModalBody>
-  </Modal>
-  <Modal id="rc" size="xl">
-    <ModalHeader>German Houses are built differently</ModalHeader>
-    <ModalBody>
-      <RedditEmbed
-        url="https://www.redditmedia.com/r/gifs/comments/onb2qg/german_houses_are_built_differently/?ref_source=embed&amp;ref=share&amp;embed=true"/>
-    </ModalBody>
-  </Modal>
-  <Modal id="ic" size="xl">
-    <ModalHeader>Gallery</ModalHeader>
-    <ModalBody>
-      <IFrameEmbed url="https://ga.de/fotos/region/unwetter-und-hochwasser-im-kreis-ahrweiler-bilder_bid-61312581#100"
-                   height="700"/>
-    </ModalBody>
-  </Modal>
-  <Modal id="yc" size="xl">
-    <ModalHeader>YouTube</ModalHeader>
-    <ModalBody>
-      <YoutubeEmbed url="https://www.youtube-nocookie.com/embed/QnCHhE8cYHE?start=15"/>
-    </ModalBody>
-  </Modal>
+  <div class="townView">
+    <Menu/>
+    <section id="town">
+      <div class="container">
+        <div class="town">
+          <h1>Ort: {{ displayTownName }}</h1>
+          <ModalLink target="#tc"><a class="">Twitter</a></ModalLink>
+          <br>
+          <ModalLink target="#rc"><a class="">Reddit</a></ModalLink>
+          <br>
+          <ModalLink target="#ic"><a class="">IFrame</a></ModalLink>
+          <br>
+          <ModalLink target="#yc"><a class="">YouTube</a></ModalLink>
+        </div>
+        <Modal id="tc" size="lg">
+          <ModalHeader>EPA@Twitter</ModalHeader>
+          <ModalBody>
+            <TwitterEmbed :tweet="1416069093975859211"/>
+          </ModalBody>
+        </Modal>
+        <Modal id="rc" size="xl">
+          <ModalHeader>German Houses are built differently</ModalHeader>
+          <ModalBody>
+            <RedditEmbed
+              url="https://www.redditmedia.com/r/gifs/comments/onb2qg/german_houses_are_built_differently/?ref_source=embed&amp;ref=share&amp;embed=true"/>
+          </ModalBody>
+        </Modal>
+        <Modal id="ic" size="xl">
+          <ModalHeader>Gallery</ModalHeader>
+          <ModalBody>
+            <IFrameEmbed
+              url="https://ga.de/fotos/region/unwetter-und-hochwasser-im-kreis-ahrweiler-bilder_bid-61312581#100"
+              :height="700"/>
+          </ModalBody>
+        </Modal>
+        <Modal id="yc" size="xl">
+          <ModalHeader>YouTube</ModalHeader>
+          <ModalBody>
+            <YoutubeEmbed url="https://www.youtube-nocookie.com/embed/QnCHhE8cYHE?start=15"/>
+          </ModalBody>
+        </Modal>
 
-  <TownMap :internal-town-name="currentRoute.params.name"></TownMap>
+        <TownMap :internal-town-name="currentRoute.params.name"></TownMap>
+      </div>
+    </section>
+    <Credits/>
+  </div>
 </template>
 
 <script lang="ts">
@@ -48,9 +60,12 @@ import RedditEmbed from '@/components/RedditEmbed.vue'
 import IFrameEmbed from '@/components/IFrameEmbed.vue'
 import YoutubeEmbed from '@/components/YoutubeEmbed.vue'
 import TownMap from '@/components/TownMap.vue'
+import Menu from '@/components/Menu.vue'
+import Credits from '@/components/Credits.vue'
 
 @Options({
   components: {
+    Credits,
     TownMap,
     YoutubeEmbed,
     IFrameEmbed,
@@ -59,16 +74,46 @@ import TownMap from '@/components/TownMap.vue'
     ModalLink,
     ModalBody,
     ModalHeader,
-    Modal
+    Modal,
+    Menu
   },
   props: {
-    townName: String
+    townName: {
+      type: String,
+      default: ''
+    }
   }
 })
 export default class Town extends Vue {
   currentRoute = useRoute()
+  townName!: string
+
+  get displayTownName (): string {
+    let routeName: string
+    if (typeof this.currentRoute.params.name === 'string') {
+      routeName = this.currentRoute.params.name
+    } else {
+      routeName = this.currentRoute.params.name[0]
+    }
+
+    return this.townName ? this.townName : this.ucfirst(routeName)
+  }
+
+  ucfirst (s: string): string {
+    return s.charAt(0).toUpperCase() + s.slice(1)
+  }
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
+.townView {
+  min-height: 100vh;
+  background-color: #404040;
+  color: white;
+}
+
+#town {
+  padding-top: 3em;
+  padding-bottom: 3em;
+}
 </style>

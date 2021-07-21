@@ -1,5 +1,5 @@
 <template>
-  <div class="mapContainer">
+  <div class="container mapContainer">
     <h1 class="text-center">Karte</h1>
     <div class="map">
       <svg viewBox="0 0 2189 1056" xmlns="http://www.w3.org/2000/svg">
@@ -51,6 +51,10 @@ export default class Map extends Vue {
 </script>
 
 <style lang="scss" scoped>
+h1 {
+  color: white;
+}
+
 .mapContainer {
   padding-top: 3em;
 }
@@ -58,5 +62,6 @@ export default class Map extends Vue {
 svg {
   background-color: lightgreen;
   margin: 1em 0;
+  border-radius: 20px;
 }
 </style>

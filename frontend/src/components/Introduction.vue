@@ -7,10 +7,8 @@
       verschiedene Beiträge gesammelt, die die Ausmaße der Zerstörungen dokumentieren.
     </p>
 
-    <div class="mapLink">
-      <router-link to="/karte">
-        <BigButton>Karte ansehen</BigButton>
-      </router-link>
+    <div>
+      <BigButton @click="emitMapButtonClick">Karte ansehen</BigButton>
     </div>
   </div>
 </template>
@@ -20,9 +18,15 @@ import { Options, Vue } from 'vue-class-component'
 import BigButton from '@/components/BigButton.vue'
 
 @Options({
-  components: { BigButton }
+  components: { BigButton },
+  emits: {
+    mapButtonClick: null
+  }
 })
 export default class Introduction extends Vue {
+  emitMapButtonClick (e: Event): void {
+    this.$emit('mapButtonClick', e)
+  }
 }
 </script>
 

@@ -17,6 +17,8 @@ function getPDO(): PDO
     return $GLOBALS['pdo'];
 }
 
+getPDO()->exec('SET CHARACTER SET UTF8');
+
 $app = AppFactory::create();
 
 // todo this CORS workaround is only for development. Remove in production
@@ -39,6 +41,12 @@ $app->get('/api/towns', function (Request $request, Response $response) {
     $towns = [];
     /** @var Town $town */
     while (($town = $stmt->fetchObject(Town::class))) {
+        $town->id = (int) $town->id;
+        $town->name = (string) $town->name;
+        $town->route = (string) $town->route;
+        $town->x = (float) $town->x;
+        $town->y = (float) $town->y;
+        $town->label = (string) $town->label;
         $towns[] = $town;
     }
 
@@ -56,6 +64,12 @@ $app->get('/api/town/{id}', function (Request $request, Response $response, arra
     if (!$town) {
         return $response->withStatus(404, 'Not Found');
     }
+    $town->id = (int) $town->id;
+    $town->name = (string) $town->name;
+    $town->route = (string) $town->route;
+    $town->x = (float) $town->x;
+    $town->y = (float) $town->y;
+    $town->label = (string) $town->label;
 
     $response->getBody()->write(json_encode($town));
     return $response->withHeader('Content-Type', 'application/json');
@@ -76,6 +90,13 @@ $app->get('/api/media/{town}', function (Request $request, Response $response, a
     $medias = [];
     /** @var Media $media */
     while (($media = $stmt->fetchObject(Media::class))) {
+        $media->id = (int) $media->id;
+        $media->town = (int) $media->town;
+        $media->title = (string) $media->title;
+        $media->timestamp = (string) $media->timestamp;
+        $media->latitude = (float) $media->latitude;
+        $media->longitude = (float) $media->longitude;
+        $media->data = (string) $media->data;
         $medias[] = $media;
     }
 

@@ -11,4 +11,5 @@ class Town
     public $route;
     public $x;
     public $y;
+    public $label;
 }

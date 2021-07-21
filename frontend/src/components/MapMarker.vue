@@ -1,10 +1,10 @@
 <template>
   <router-link :to="'/ort/' + route">
     <g>
-      <text v-if="position === 'left'" style="">
+      <text class="text-left" v-if="position === 'left'" :x="x - 10" :y="y + 6" text-anchor="end">
         <slot></slot>
       </text>
-      <circle class="" :cx="x" :cy="y" :r="6"/>
+      <circle :cx="x" :cy="y" :r="6"/>
       <text v-if="position === 'right'" :x="x + 10" :y="y + 6">
         <slot></slot>
       </text>
@@ -37,5 +37,9 @@ circle {
 }
 a {
   text-decoration: none;
+  font-size: 1.2em;
+}
+.text-left {
+  text-align: right;
 }
 </style>

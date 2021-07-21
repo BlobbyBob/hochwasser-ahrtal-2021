@@ -5,7 +5,7 @@
       <svg viewBox="0 0 2189 1056" xmlns="http://www.w3.org/2000/svg">
         <Ahr/>
         <MapMarker v-for="town of computedTowns" v-bind:key="town"
-                   :route="town.route" position="right" :x="town.x" :y="town.y">
+                   :route="town.route" :position="town.label" :x="town.x" :y="town.y">
           {{ town.name }}
         </MapMarker>
       </svg>

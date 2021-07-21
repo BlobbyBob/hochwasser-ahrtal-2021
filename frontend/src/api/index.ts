@@ -4,6 +4,7 @@ export class TownData {
   route!: string
   x!: number
   y!: number
+  label!: 'left' | 'right'
 }
 
 export class MediaData {

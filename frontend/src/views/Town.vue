@@ -18,14 +18,6 @@
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
 import { useRoute } from 'vue-router'
-import Modal from '@/components/Modal.vue'
-import ModalHeader from '@/components/ModalHeader.vue'
-import ModalBody from '@/components/ModalBody.vue'
-import ModalLink from '@/components/ModalLink.vue'
-import TwitterEmbed from '@/components/TwitterEmbed.vue'
-import RedditEmbed from '@/components/RedditEmbed.vue'
-import IFrameEmbed from '@/components/IFrameEmbed.vue'
-import YoutubeEmbed from '@/components/YoutubeEmbed.vue'
 import TownMap from '@/components/TownMap.vue'
 import Menu from '@/components/Menu.vue'
 import Credits from '@/components/Credits.vue'
@@ -36,14 +28,6 @@ import ContentModal from '@/components/ContentModal.vue'
     ContentModal,
     Credits,
     TownMap,
-    YoutubeEmbed,
-    IFrameEmbed,
-    RedditEmbed,
-    TwitterEmbed,
-    ModalLink,
-    ModalBody,
-    ModalHeader,
-    Modal,
     Menu
   },
   props: {

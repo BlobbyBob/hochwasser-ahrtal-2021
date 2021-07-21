@@ -5,13 +5,6 @@
       <div class="container">
         <div class="town">
           <h1>Ort: {{ displayTownName }}</h1>
-          <ModalLink target="#tc"><a class="">Twitter</a></ModalLink>
-          <br>
-          <ModalLink target="#rc"><a class="">Reddit</a></ModalLink>
-          <br>
-          <ModalLink target="#ic"><a class="">IFrame</a></ModalLink>
-          <br>
-          <ModalLink target="#yc"><a class="">YouTube</a></ModalLink>
         </div>
         <Modal id="tc" size="lg">
           <ModalHeader>EPA@Twitter</ModalHeader>

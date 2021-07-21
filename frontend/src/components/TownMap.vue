@@ -36,9 +36,9 @@ export default defineComponent({
   },
   mounted () {
     const map = L.map('mapContainer').setView([50.4450, 6.8748], 12)
-    L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+    L.tileLayer('https://{s}.tile.osm.org/{z}/{x}/{y}.png', {
       attribution:
-        '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+        '&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map)
 
     const marker = L.marker([50.4450, 6.8748]).addTo(map)

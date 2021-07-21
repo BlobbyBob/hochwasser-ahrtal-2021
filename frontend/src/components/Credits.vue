@@ -2,10 +2,10 @@
   <div class="credits container">
     <div class="d-flex justify-content-between align-items-center">
       <div>
-        Ein Projekt von Ben Swierzy und Daniel Meyer.
+        &copy; hochwasser-ahrtal-2021.de | Ein Projekt von Ben Swierzy und Daniel Meyer.
       </div>
       <div>
-        <a href="https://github.com/BlobbyBob/hochwasser-ahrtal-2021">
+        <a href="https://github.com/BlobbyBob/hochwasser-ahrtal-2021" title="Projekt auf GitHub besuchen">
           <BootstrapIcon icon="github" size="3x"/>
         </a>
       </div>

@@ -9,6 +9,8 @@ export class TownData {
 export class MediaData {
   id!: number
   town!: number
+  title!: string
+  timestamp!: string
   latitude!: number
   longitude!: number
   type!: 'twitter' | 'reddit' | 'youtube' | 'iframe'

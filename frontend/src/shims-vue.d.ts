@@ -6,3 +6,4 @@ declare module '*.vue' {
 }
 
 declare module '@dvuckovic/vue3-bootstrap-icons'
+declare module '@vue-leaflet/vue-leaflet'

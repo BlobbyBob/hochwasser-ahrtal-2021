@@ -14,7 +14,7 @@
         <ul>
           <li v-for="popup of group.media" :key="popup.id">
             <ModalLink target="#contentModal" v-on:click="handlePopupClick(popup)">
-              <a class="">{{ popup.id }} {{ popup.title }}</a>
+              <a class="modal-link">{{ popup.id }} {{ popup.title }}</a>
             </ModalLink>
           </li>
         </ul>
@@ -31,6 +31,7 @@ import L from 'leaflet'
 import { getMedia, MediaData } from '@/api'
 import { LMap, LMarker, LPopup, LTileLayer } from '@vue-leaflet/vue-leaflet'
 import ModalLink from '@/components/ModalLink.vue'
+import ContentModal from '@/components/ContentModal.vue'
 
 // https://github.com/Leaflet/Leaflet/issues/4968
 // ...
@@ -84,8 +85,8 @@ export default class TownMap extends Vue {
 
   handlePopupClick (item: MediaData): void {
     console.log(this.$parent)
-    console.log(this)
-    // this.$parent!.$refs.mainContentModal.setContent(item.type, item.title, JSON.parse(item.data))
+    console.log(this);
+    (this.$parent!.$refs.mainContentModal as ContentModal).setContent(item.type, item.title, JSON.parse(item.data))
   }
 
   groupAndPlaceMarkers (list: MediaData[]): void {
@@ -115,55 +116,6 @@ export default class TownMap extends Vue {
     })
   }
 
-  // set id (id: number) {
-  //   this.townId = id
-  //   getMedia(this.id).then(res => {
-  //     this.groupAndPlaceMarkers(res)
-  //   }).catch(() => {
-  //     // todo
-  //   })
-  // }
-  //
-  // get id (): number {
-  //   return this.townId
-  // }
-  //
-  // set name (name: string) {
-  //   this.townName = name
-  // }
-  //
-  // get name (): string {
-  //   return this.townName
-  // }
-  //
-  // set latitude (l: number) {
-  //   this.townLatitude = l
-  // }
-  //
-  // get latitude (): number {
-  //   return this.townLatitude
-  // }
-  //
-  // set longitude (l: number) {
-  //   this.townLongitude = l
-  // }
-  //
-  // get longitude (): number {
-  //   return this.townLongitude
-  // }
-  //
-  // set zoom (zoom: number) {
-  //   this.townZoom = zoom
-  // }
-  //
-  // get zoom (): number {
-  //   return this.townZoom
-  // }
-  //
-  // get center (): Array<number> {
-  //   return [this.latitude, this.longitude]
-  // }
-
   beforeUnmount (): void {
     if (this.map) {
       // this.map.destroy()
@@ -173,5 +125,7 @@ export default class TownMap extends Vue {
 </script>
 
 <style scoped>
-
+.modal-link {
+  cursor: pointer;
+}
 </style>

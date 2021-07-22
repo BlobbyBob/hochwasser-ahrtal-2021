@@ -71,5 +71,7 @@ export default class ContentModal extends Vue {
 </script>
 
 <style lang="scss" scoped>
-
+* {
+  color: black;
+}
 </style>

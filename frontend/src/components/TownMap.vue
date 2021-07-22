@@ -1,5 +1,5 @@
 <template>
-  <l-map ref="maptest" style="height: 70vh" :center="center" :zoom="zoom">
+  <l-map ref="maptest" style="height: 70vh" :center="[latitude, longitude]" :zoom="zoom">
     <l-tile-layer
       url="https://{s}.tile.osm.org/{z}/{x}/{y}.png"
       attribution="&copy; <a href='https://osm.org/copyright'>OpenStreetMap</a> contributors"
@@ -26,8 +26,8 @@
 import { Options, Vue } from 'vue-class-component'
 import 'leaflet/dist/leaflet.css'
 import L from 'leaflet'
-import { getMedia, getTown, MediaData, TownData } from '@/api'
-import { LMap, LTileLayer, LMarker, LPopup } from '@vue-leaflet/vue-leaflet'
+import { getMedia, MediaData } from '@/api'
+import { LMap, LMarker, LPopup, LTileLayer } from '@vue-leaflet/vue-leaflet'
 
 // https://github.com/Leaflet/Leaflet/issues/4968
 // ...
@@ -56,14 +56,28 @@ class GroupedMediaData {
     LPopup
   },
   props: {
+    id: Number,
+    name: String,
+    latitude: Number,
+    longitude: Number,
+    zoom: Number
   }
 })
 export default class TownMap extends Vue {
   groupedMediaData: Map<string, GroupedMediaData> = new Map()
-  internalTown?: TownData
   map!: L.Map
-  zoom = 14
-  center = [50, 6]
+
+  id!: number
+  name!: string
+  latitude!: number
+  longitude!: number
+  zoom!: number
+
+  // townId = 0
+  // townName = ''
+  // townLatitude = 50
+  // townLongitude = 6
+  // townZoom = 14
 
   groupAndPlaceMarkers (list: MediaData[]): void {
     const tmpMap: Map<string, GroupedMediaData> = new Map()
@@ -88,6 +102,14 @@ export default class TownMap extends Vue {
     this.groupedMediaData = tmpMap
   }
 
+  mounted (): void {
+    getMedia(this.id).then(res => {
+      this.groupAndPlaceMarkers(res)
+    }).catch(() => {
+      // todo
+    })
+  }
+
   //  const marker = L.marker([50.4450, 6.8748]).addTo(this.map)
   // marker.bindPopup('Ich bin ein Test-Popup')
   // marker.on('click', function (e) { console.log(e) })
@@ -98,28 +120,56 @@ export default class TownMap extends Vue {
   // console.log(list)
   // }
 
-  set town (town: TownData | undefined) {
-    this.internalTown = town
-    if (this.internalTown) {
-      console.log('Found town!')
+  // set id (id: number) {
+  //   this.townId = id
+  //   getMedia(this.id).then(res => {
+  //     this.groupAndPlaceMarkers(res)
+  //   }).catch(() => {
+  //     // todo
+  //   })
+  // }
+  //
+  // get id (): number {
+  //   return this.townId
+  // }
+  //
+  // set name (name: string) {
+  //   this.townName = name
+  // }
+  //
+  // get name (): string {
+  //   return this.townName
+  // }
+  //
+  // set latitude (l: number) {
+  //   this.townLatitude = l
+  // }
+  //
+  // get latitude (): number {
+  //   return this.townLatitude
+  // }
+  //
+  // set longitude (l: number) {
+  //   this.townLongitude = l
+  // }
+  //
+  // get longitude (): number {
+  //   return this.townLongitude
+  // }
+  //
+  // set zoom (zoom: number) {
+  //   this.townZoom = zoom
+  // }
+  //
+  // get zoom (): number {
+  //   return this.townZoom
+  // }
+  //
+  // get center (): Array<number> {
+  //   return [this.latitude, this.longitude]
+  // }
 
-      this.center = [this.internalTown.latitude, this.internalTown.longitude]
-      this.zoom = this.internalTown.zoom
-
-      // query media
-      getMedia(this.internalTown.id).then(res => {
-        this.groupAndPlaceMarkers(res)
-      })
-    } else {
-      console.log('Did not find town')
-    }
-  }
-
-  get town (): TownData | undefined {
-    return this.internalTown
-  }
-
-  beforeUnmount () {
+  beforeUnmount (): void {
     if (this.map) {
       // this.map.destroy()
     }

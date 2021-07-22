@@ -7,7 +7,7 @@
           <h1>Ort: {{ displayTownName }}</h1>
         </div>
 
-        <TownMap :internal-town-name="currentRoute.params.name"/>
+        <TownMap :town="town"/>
         <ContentModal/>
       </div>
     </section>
@@ -22,6 +22,7 @@ import TownMap from '@/components/TownMap.vue'
 import Menu from '@/components/Menu.vue'
 import Credits from '@/components/Credits.vue'
 import ContentModal from '@/components/ContentModal.vue'
+import { getTown, TownData } from '@/api'
 
 @Options({
   components: {
@@ -40,8 +41,13 @@ import ContentModal from '@/components/ContentModal.vue'
 export default class Town extends Vue {
   currentRoute = useRoute()
   townName!: string
+  town?: TownData
 
   get displayTownName (): string {
+    return this.townName ? this.townName : this.ucfirst(this.routeName)
+  }
+
+  get routeName (): string {
     let routeName: string
     if (typeof this.currentRoute.params.name === 'string') {
       routeName = this.currentRoute.params.name
@@ -49,11 +55,20 @@ export default class Town extends Vue {
       routeName = this.currentRoute.params.name[0]
     }
 
-    return this.townName ? this.townName : this.ucfirst(routeName)
+    return routeName
   }
 
   ucfirst (s: string): string {
     return s.charAt(0).toUpperCase() + s.slice(1)
+  }
+
+  mounted (): void {
+    this.town = undefined
+    getTown(this.routeName).then(town => {
+      this.town = town
+    }).catch(() => {
+      // todo
+    })
   }
 }
 </script>

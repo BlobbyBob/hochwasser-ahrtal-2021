@@ -11,6 +11,9 @@ class Town
     public $route;
     public $x;
     public $y;
+    public $latitude;
+    public $longitude;
+    public $zoom;
     public $label;
 
     public function setTypes()
@@ -20,6 +23,9 @@ class Town
         $this->route = (string) $this->route;
         $this->x = (float) $this->x;
         $this->y = (float) $this->y;
+        $this->latitude = (float) $this->latitude;
+        $this->longitude = (float) $this->longitude;
+        $this->zoom = (int) $this->zoom;
         $this->label = (string) $this->label;
     }
 }

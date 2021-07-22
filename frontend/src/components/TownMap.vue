@@ -1,5 +1,5 @@
 <template>
-  <l-map ref="maptest" style="height: 70vh" v-bind:center="center" v-bind:zoom="zoom">
+  <l-map ref="maptest" style="height: 70vh" :center="center" :zoom="zoom">
     <l-tile-layer
       url="https://{s}.tile.osm.org/{z}/{x}/{y}.png"
       attribution="&copy; <a href='https://osm.org/copyright'>OpenStreetMap</a> contributors"
@@ -42,9 +42,9 @@ L.Icon.Default.mergeOptions({
 })
 
 class GroupedMediaData {
-  n!: number;
-  lat!: number;
-  lng!: number;
+  n!: number
+  lat!: number
+  lng!: number
   media!: MediaData[]
 }
 
@@ -56,21 +56,17 @@ class GroupedMediaData {
     LPopup
   },
   props: {
-    internalTownName: {
-      type: String,
-      required: true
-    }
+    town: TownData
   }
 })
 export default class TownMap extends Vue {
-  internalTownName !: string
   groupedMediaData: Map<string, GroupedMediaData> = new Map()
   town?: TownData
   map!: L.Map
   zoom = 14
   center = [50.4450, 6.8748]
 
-  groupAndPlaceMarkers (list : MediaData[]): void {
+  groupAndPlaceMarkers (list: MediaData[]): void {
     const tmpMap: Map<string, GroupedMediaData> = new Map()
     let n = 1
     for (const media of list) {
@@ -92,6 +88,7 @@ export default class TownMap extends Vue {
     console.log(tmpMap)
     this.groupedMediaData = tmpMap
   }
+
   //  const marker = L.marker([50.4450, 6.8748]).addTo(this.map)
   // marker.bindPopup('Ich bin ein Test-Popup')
   // marker.on('click', function (e) { console.log(e) })
@@ -103,15 +100,15 @@ export default class TownMap extends Vue {
   // }
 
   mounted (): void {
-    // query town info for coordinates
-    getTown(1).then(res => {
-      this.center = [50.4450, 6.8748]
-      this.zoom = 14
-    })
-    // query media
-    getMedia(1).then(res => {
-      this.groupAndPlaceMarkers(res)
-    })
+    if (this.town) {
+      this.center = [this.town.latitude, this.town.longitude]
+      this.zoom = this.town.zoom
+
+      // query media
+      getMedia(this.town.id).then(res => {
+        this.groupAndPlaceMarkers(res)
+      })
+    }
   }
 
   beforeUnmount () {

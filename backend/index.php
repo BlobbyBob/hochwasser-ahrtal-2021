@@ -50,7 +50,7 @@ $app->get('/api/towns', function (Request $request, Response $response) {
 });
 
 $app->get('/api/town/{name}', function (Request $request, Response $response, array $args) {
-    $stmt = getPDO()->prepare('SELECT * FROM towns WHERE name = ?');
+    $stmt = getPDO()->prepare('SELECT * FROM towns WHERE route = ?');
     $stmt->execute([$args['name']]);
 
     /** @var Town $town */

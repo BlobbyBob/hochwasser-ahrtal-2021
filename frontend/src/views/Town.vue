@@ -4,9 +4,10 @@
     <section id="town">
       <div class="container">
         <div class="town">
-          <h1>Ort: {{ displayTownName }}</h1>
+          <h1 v-if="mapDataReady">Ort: {{ displayTownName }}</h1>
         </div>
-
+        <div v-if="!mapDataReady && !error" class="alert alert-primary">Lade Karte...</div>
+        <div v-if="error" class="alert alert-primary"><strong>Fehler:</strong> Karte kann nicht geladen werden. Überprüfe deine Netzwerkverbindung</div>
         <TownMap v-if="mapDataReady" :town="town"/>
         <ContentModal/>
       </div>
@@ -32,20 +33,16 @@ import { getTown, TownData } from '@/api'
     Menu
   },
   props: {
-    townName: {
-      type: String,
-      default: ''
-    }
   }
 })
 export default class Town extends Vue {
   currentRoute = useRoute()
-  townName!: string
-  internalTown?: TownData
+  internalTown: TownData | undefined
   mapDataReady = false
+  error = false
 
   get displayTownName (): string {
-    return this.townName ? this.townName : this.ucfirst(this.routeName)
+    return this.town ? this.town.name : this.ucfirst(this.routeName)
   }
 
   get routeName (): string {
@@ -72,11 +69,12 @@ export default class Town extends Vue {
   }
 
   mounted (): void {
+    this.error = false
     getTown(this.routeName).then(town => {
       this.town = town
       this.mapDataReady = true
     }).catch(() => {
-      // todo
+      this.error = true
     })
   }
 }

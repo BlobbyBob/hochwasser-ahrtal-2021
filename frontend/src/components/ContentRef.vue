@@ -7,8 +7,12 @@
       <BootstrapIcon v-if="type === 'reddit'" icon="reddit" style="color: #ff4500"/>
       <BootstrapIcon v-if="type === 'iframe'" icon="newspaper"/>
       <BootstrapIcon v-if="type === 'youtube'" icon="youtube" style="color: #ff0404"/>
+      <BootstrapIcon v-if="type === 'link'" icon="box-arrow-up-right"/>
     </span>
-    <a href="#" class="ms-2" @click="e => e.preventDefault()">
+    <a v-if="type !== 'link'" href="#" class="ms-2" @click="e => e.preventDefault()">
+      <slot></slot>
+    </a>
+    <a v-if="type === 'link'" :href="JSON.parse(data).url" class="ms-2" target="_blank" @click="e => e.stopPropagation()">
       <slot></slot>
     </a>
   </div>
@@ -31,6 +35,10 @@ import BootstrapIcon from '@dvuckovic/vue3-bootstrap-icons'
       type: Boolean,
       required: false,
       default: false
+    },
+    data: {
+      required: false,
+      default: {}
     }
   },
   emits: {
@@ -41,6 +49,8 @@ export default class ContentRef extends Vue {
   type!: string
   image!: boolean
   video!: boolean
+  // eslint-disable-next-line
+  data!: any
 
   onClick (e: Event): void {
     this.$emit('click', e)

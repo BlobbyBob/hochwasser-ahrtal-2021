@@ -10,7 +10,7 @@
           <div class="d-flex flex-column align-items-start">
             <div v-for="popup of group.media" :key="popup.id">
               <ModalLink target="#contentModal" @click="handlePopupClick(popup)">
-                <ContentRef image :type="popup.type" class="modal-link">
+                <ContentRef :image="popup.format === 'image'" :video="popup.format === 'video'" :type="popup.type" :data="popup.data" class="modal-link">
                   {{ popup.title }} ({{ dateFormat(new Date(popup.timestamp)) }})
                 </ContentRef>
               </ModalLink>

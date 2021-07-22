@@ -1,6 +1,6 @@
 <template>
   <div class="twitterEmbed d-flex justify-content-center">
-    <iframe width="550" scrolling="no"
+    <iframe width="550" scrolling="no" allowfullscreen
             :src="`https://platform.twitter.com/embed/Tweet.html?dnt=true&embedId=twitter-widget-0&frame=false&hideCard=false&hideThread=false&id=${tweet}&lang=de&theme=light&widgetsVersion=82e1070%3A1619632193066&width=550px`"/>
   </div>
 </template>

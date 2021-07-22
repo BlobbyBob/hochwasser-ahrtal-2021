@@ -34,7 +34,7 @@ import IFrameEmbed from '@/components/IFrameEmbed.vue'
 export default class ContentModal extends Vue {
   size: 'sm' | 'md' | 'lg' | 'xl' = 'lg'
   title = ''
-  type: 'twitter' | 'reddit' | 'iframe' | 'youtube' | 'blank' = 'blank'
+  type: 'twitter' | 'reddit' | 'iframe' | 'youtube' | 'link' | 'blank' = 'blank'
 
   tweetId = -1
   twitterIframeUrl = ''
@@ -45,7 +45,7 @@ export default class ContentModal extends Vue {
 
   // todo create explicit data type
   // eslint-disable-next-line
-  public setContent (type: 'twitter' | 'reddit' | 'iframe' | 'youtube' | 'blank', title: string, data: any): void {
+  public setContent (type: 'twitter' | 'reddit' | 'iframe' | 'youtube' | 'link' | 'blank', title: string, data: any): void {
     this.type = type
     this.title = title
 

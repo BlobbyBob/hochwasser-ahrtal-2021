@@ -17,12 +17,12 @@ export class MediaData {
   timestamp!: string
   latitude!: number
   longitude!: number
-  type!: 'twitter' | 'reddit' | 'youtube' | 'iframe'
+  type!: 'twitter' | 'reddit' | 'youtube' | 'iframe' | 'link'
   format!: 'image' | 'video'
   data!: string
 }
 
-const apiUrl = 'https://hochwasser-ahrtal-2021.de/api'
+const apiUrl = 'http://hochwasser.digitalbread.de/api'
 
 export async function getTowns (): Promise<TownData[]> {
   return fetch(apiUrl + '/towns').then(response => response.json())

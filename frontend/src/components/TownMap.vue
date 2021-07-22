@@ -128,4 +128,8 @@ export default class TownMap extends Vue {
 .modal-link {
   cursor: pointer;
 }
+
+ul {
+  list-style-type: none
+}
 </style>

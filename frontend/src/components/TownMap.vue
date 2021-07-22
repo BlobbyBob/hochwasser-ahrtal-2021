@@ -1,27 +1,25 @@
 <template>
-  <l-map ref="maptest" style="height: 70vh" :center="[latitude, longitude]" :zoom="zoom">
-    <l-tile-layer
-      url="https://{s}.tile.osm.org/{z}/{x}/{y}.png"
-      attribution="&copy; <a href='https://osm.org/copyright'>OpenStreetMap</a> contributors"
-    />
+  <div id="townMap">
+    <l-map ref="maptest" style="height: 70vh" :center="[latitude, longitude]" :zoom="zoom">
+      <l-tile-layer
+        url="https://{s}.tile.osm.org/{z}/{x}/{y}.png"
+        attribution="&copy; <a href='https://osm.org/copyright'>OpenStreetMap</a> contributors"/>
 
-    <l-marker :lat-lng="[50.4450, 6.8748]">
-      <l-popup>hi</l-popup>
-    </l-marker>
-
-    <l-marker v-for="[k, group] of groupedMediaData" :lat-lng="group.latLng" :key="k">
-      <l-popup>
-        <ul>
-          <li v-for="popup of group.media" :key="popup.id">
-            <ModalLink target="#contentModal" v-on:click="handlePopupClick(popup)">
-              <a class="modal-link">{{ popup.id }} {{ popup.title }}</a>
-            </ModalLink>
-          </li>
-        </ul>
-      </l-popup>
-    </l-marker>
-
-  </l-map>
+      <l-marker v-for="[k, group] of groupedMediaData" :lat-lng="group.latLng" :key="k">
+        <l-popup :options="{maxWidth: 2000, className: 'popup-custom'}">
+          <div class="d-flex flex-column align-items-start">
+            <div v-for="popup of group.media" :key="popup.id">
+              <ModalLink target="#contentModal" @click="handlePopupClick(popup)">
+                <ContentRef image :type="popup.type" class="modal-link">
+                  {{ popup.title }} ({{ dateFormat(new Date(popup.timestamp)) }})
+                </ContentRef>
+              </ModalLink>
+            </div>
+          </div>
+        </l-popup>
+      </l-marker>
+    </l-map>
+  </div>
 </template>
 
 <script lang="ts">
@@ -32,6 +30,7 @@ import { getMedia, MediaData } from '@/api'
 import { LMap, LMarker, LPopup, LTileLayer } from '@vue-leaflet/vue-leaflet'
 import ModalLink from '@/components/ModalLink.vue'
 import ContentModal from '@/components/ContentModal.vue'
+import ContentRef from '@/components/ContentRef.vue'
 
 // https://github.com/Leaflet/Leaflet/issues/4968
 // ...
@@ -53,6 +52,7 @@ class GroupedMediaData {
 
 @Options({
   components: {
+    ContentRef,
     ModalLink,
     LMap,
     LTileLayer,
@@ -77,15 +77,7 @@ export default class TownMap extends Vue {
   longitude!: number
   zoom!: number
 
-  // townId = 0
-  // townName = ''
-  // townLatitude = 50
-  // townLongitude = 6
-  // townZoom = 14
-
   handlePopupClick (item: MediaData): void {
-    console.log(this.$parent)
-    console.log(this);
     (this.$parent!.$refs.mainContentModal as ContentModal).setContent(item.type, item.title, JSON.parse(item.data))
   }
 
@@ -104,8 +96,11 @@ export default class TownMap extends Vue {
       tmpMap.get(key)!.media.push(media)
       n++
     }
-    console.log(tmpMap)
     this.groupedMediaData = tmpMap
+  }
+
+  dateFormat (date: Date): string {
+    return new Intl.DateTimeFormat('de-DE', { dateStyle: 'short' }).format(date)
   }
 
   mounted (): void {
@@ -124,8 +119,17 @@ export default class TownMap extends Vue {
 }
 </script>
 
-<style scoped>
-.modal-link {
+<style lang="scss">
+#townMap .modal-link {
   cursor: pointer;
+}
+
+#townMap ul {
+  padding: 0;
+  list-style: none;
+}
+
+.popup-custom {
+  font-size: 1.2em;
 }
 </style>

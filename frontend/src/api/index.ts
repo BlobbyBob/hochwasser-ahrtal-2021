@@ -18,6 +18,7 @@ export class MediaData {
   latitude!: number
   longitude!: number
   type!: 'twitter' | 'reddit' | 'youtube' | 'iframe'
+  format!: 'image' | 'video'
   data!: string
 }
 

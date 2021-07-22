@@ -8,7 +8,7 @@
       </div>
       <div>
         <a @click="back" class="pe-auto">
-          <BootstrapIcon icon="chevron-left" size="1x" class="pr-3"/>
+          <BootstrapIcon icon="chevron-left" size="1" class="pr-3"/>
           Zurück zur Karte
         </a>
       </div>

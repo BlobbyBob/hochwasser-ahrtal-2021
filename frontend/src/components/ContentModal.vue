@@ -2,7 +2,7 @@
   <Modal id="contentModal" :size="size">
     <ModalHeader>{{ title }}</ModalHeader>
     <ModalBody>
-      <TwitterEmbed v-if="type === 'twitter'" :tweet="tweetId"/>
+      <TwitterEmbed v-if="type === 'twitter'" :tweet="tweetId" :iframe="twitterIframeUrl"/>
       <RedditEmbed v-if="type === 'reddit'" :url="redditUrl"/>
       <IFrameEmbed v-if="type === 'iframe'" :url="iframeUrl" :height="iframeHeight"/>
       <YoutubeEmbed v-if="type === 'youtube'" :url="youtubeUrl"/>
@@ -37,6 +37,7 @@ export default class ContentModal extends Vue {
   type: 'twitter' | 'reddit' | 'iframe' | 'youtube' | 'blank' = 'blank'
 
   tweetId = -1
+  twitterIframeUrl = ''
   youtubeUrl = ''
   redditUrl = ''
   iframeUrl = ''
@@ -50,16 +51,21 @@ export default class ContentModal extends Vue {
 
     switch (type) {
       case 'twitter':
+        this.size = 'md'
         this.tweetId = data.id
+        this.twitterIframeUrl = data.iframe
         break
       case 'iframe':
+        this.size = 'xl'
         this.iframeUrl = data.url
         this.iframeHeight = data.height
         break
       case 'reddit':
+        this.size = 'md'
         this.redditUrl = `https://www.redditmedia.com/r/gifs/comments/${data.postId}?ref_source=embed&amp;ref=share&amp;embed=true`
         break
       case 'youtube':
+        this.size = 'xl'
         this.youtubeUrl = `https://www.youtube-nocookie.com/embed/${data.videoId}`
         if (data.start) {
           this.youtubeUrl += `?start=${data.start}`

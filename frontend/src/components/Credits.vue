@@ -6,7 +6,7 @@
       </div>
       <div>
         <a href="https://github.com/BlobbyBob/hochwasser-ahrtal-2021" title="Projekt auf GitHub besuchen">
-          <BootstrapIcon icon="github" size="3x"/>
+          <BootstrapIcon icon="github" size="3"/>
         </a>
       </div>
     </div>

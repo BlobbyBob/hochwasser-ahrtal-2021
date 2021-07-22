@@ -13,6 +13,7 @@ class Media
     public $latitude;
     public $longitude;
     public $type;
+    public $format;
     public $data;
 
     public function setTypes()
@@ -23,6 +24,8 @@ class Media
         $this->timestamp = (string) $this->timestamp;
         $this->latitude = (float) $this->latitude;
         $this->longitude = (float) $this->longitude;
+        $this->type = (string) $this->type;
+        $this->format = (string) $this->format;
         $this->data = (string) $this->data;
     }
 }

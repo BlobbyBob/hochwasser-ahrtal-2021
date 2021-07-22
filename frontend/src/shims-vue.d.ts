@@ -7,3 +7,12 @@ declare module '*.vue' {
 
 declare module '@dvuckovic/vue3-bootstrap-icons'
 declare module '@vue-leaflet/vue-leaflet'
+
+// https://github.com/microsoft/TypeScript/issues/35865
+declare namespace Intl {
+  interface DateTimeFormatOptions {
+    dateStyle?: 'full' | 'long' | 'medium' | 'short';
+    timeStyle?: 'full' | 'long' | 'medium' | 'short';
+  }
+}
+

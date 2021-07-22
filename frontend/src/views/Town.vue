@@ -4,7 +4,7 @@
     <section id="town">
       <div class="container">
         <div class="town">
-          <h1 v-if="mapDataReady">Ort: {{ displayTownName }}</h1>
+          <h1 v-if="mapDataReady" class="pb-2">Ort: {{ displayTownName }}</h1>
         </div>
         <div v-if="!mapDataReady && !error" class="alert alert-primary">Lade Karte...</div>
         <div v-if="error" class="alert alert-primary"><strong>Fehler:</strong> Karte kann nicht geladen werden.

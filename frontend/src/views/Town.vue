@@ -86,6 +86,7 @@ export default class Town extends Vue {
 .townView {
   min-height: 100vh;
   background-color: #404040;
+  background-image: linear-gradient(to bottom, #404040, #101010);
   color: white;
 }
 

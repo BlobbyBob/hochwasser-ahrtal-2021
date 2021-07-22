@@ -69,5 +69,6 @@ export default class Home extends Vue {
 #map {
   min-height: 100vh;
   background-color: #404040;
+  background-image: linear-gradient(to bottom, #404040, #101010);
 }
 </style>

@@ -21,7 +21,7 @@ export class MediaData {
   data!: string
 }
 
-const apiUrl = 'http://hochwasser.local/api'
+const apiUrl = 'http://hochwasser.digitalbread.de/api'
 
 export async function getTowns (): Promise<TownData[]> {
   return fetch(apiUrl + '/towns').then(response => response.json())

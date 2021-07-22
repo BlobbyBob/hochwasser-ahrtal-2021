@@ -56,15 +56,14 @@ class GroupedMediaData {
     LPopup
   },
   props: {
-    town: TownData
   }
 })
 export default class TownMap extends Vue {
   groupedMediaData: Map<string, GroupedMediaData> = new Map()
-  town?: TownData
+  internalTown?: TownData
   map!: L.Map
   zoom = 14
-  center = [50.4450, 6.8748]
+  center = [50, 6]
 
   groupAndPlaceMarkers (list: MediaData[]): void {
     const tmpMap: Map<string, GroupedMediaData> = new Map()
@@ -99,16 +98,25 @@ export default class TownMap extends Vue {
   // console.log(list)
   // }
 
-  mounted (): void {
-    if (this.town) {
-      this.center = [this.town.latitude, this.town.longitude]
-      this.zoom = this.town.zoom
+  set town (town: TownData | undefined) {
+    this.internalTown = town
+    if (this.internalTown) {
+      console.log('Found town!')
+
+      this.center = [this.internalTown.latitude, this.internalTown.longitude]
+      this.zoom = this.internalTown.zoom
 
       // query media
-      getMedia(this.town.id).then(res => {
+      getMedia(this.internalTown.id).then(res => {
         this.groupAndPlaceMarkers(res)
       })
+    } else {
+      console.log('Did not find town')
     }
+  }
+
+  get town (): TownData | undefined {
+    return this.internalTown
   }
 
   beforeUnmount () {

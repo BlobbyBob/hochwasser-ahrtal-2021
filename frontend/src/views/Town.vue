@@ -7,7 +7,7 @@
           <h1>Ort: {{ displayTownName }}</h1>
         </div>
 
-        <TownMap :town="town"/>
+        <TownMap v-if="mapDataReady" :town="town"/>
         <ContentModal/>
       </div>
     </section>
@@ -41,7 +41,8 @@ import { getTown, TownData } from '@/api'
 export default class Town extends Vue {
   currentRoute = useRoute()
   townName!: string
-  town?: TownData
+  internalTown?: TownData
+  mapDataReady = false
 
   get displayTownName (): string {
     return this.townName ? this.townName : this.ucfirst(this.routeName)
@@ -58,14 +59,22 @@ export default class Town extends Vue {
     return routeName
   }
 
+  get town (): TownData | undefined {
+    return this.internalTown
+  }
+
+  set town (town: TownData | undefined) {
+    this.internalTown = town
+  }
+
   ucfirst (s: string): string {
     return s.charAt(0).toUpperCase() + s.slice(1)
   }
 
   mounted (): void {
-    this.town = undefined
     getTown(this.routeName).then(town => {
       this.town = town
+      this.mapDataReady = true
     }).catch(() => {
       // todo
     })

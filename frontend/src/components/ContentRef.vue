@@ -56,7 +56,8 @@ export default class ContentRef extends Vue {
     this.$emit('click', e)
   }
 
-  openLink (): void {
+  openLink (e: Event): void {
+    e.stopImmediatePropagation()
     window.open(JSON.parse(this.data).url, '_blank')
   }
 }

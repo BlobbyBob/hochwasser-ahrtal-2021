@@ -34,6 +34,7 @@ $app->addErrorMiddleware(false, true, true);
 
 // todo get/post on / returns index.html
 
+
 $app->get('/api/towns', function (Request $request, Response $response) {
     $stmt = getPDO()->prepare('SELECT * FROM towns');
     $stmt->execute();
@@ -88,4 +89,8 @@ $app->get('/api/media/{town}', function (Request $request, Response $response, a
     return $response->withHeader('Content-Type', 'application/json');
 });
 
+$app->any('[/{path:.*}]', function (Request $request, Response $response) {
+    $response->getBody()->write(file_get_contents(__DIR__ . '/index.html'));
+    return $response;
+});
 $app->run();

@@ -49,7 +49,7 @@ export default class Home extends Vue {
   top: 0;
   left: 0;
   z-index: -100;
-  overflow-x: hidden;
+  overflow: hidden;
 
   img, video {
     min-height: 100%;

@@ -4,6 +4,9 @@ export class TownData {
   route!: string
   x!: number
   y!: number
+  latitude!: number
+  longitude!: number
+  zoom!: number
   label!: 'left' | 'right'
 }
 
@@ -24,8 +27,8 @@ export async function getTowns (): Promise<TownData[]> {
   return fetch(apiUrl + '/towns').then(response => response.json())
 }
 
-export async function getTown (id: number): Promise<TownData> {
-  return fetch(apiUrl + '/town/' + id).then(response => response.json())
+export async function getTown (name: string): Promise<TownData> {
+  return fetch(apiUrl + '/town/' + encodeURIComponent(name)).then(response => response.json())
 }
 
 export async function getMedia (id: number): Promise<MediaData[]> {

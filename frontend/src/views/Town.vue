@@ -12,7 +12,7 @@
         </div>
         <TownMap v-if="mapDataReady" :id="town.id" :name="town.name" :latitude="town.latitude"
                  :longitude="town.longitude" :zoom="town.zoom"/>
-        <ContentModal/>
+        <ContentModal ref="mainContentModal" />
       </div>
     </section>
     <Credits/>

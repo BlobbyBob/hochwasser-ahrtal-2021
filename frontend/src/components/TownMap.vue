@@ -9,11 +9,13 @@
       <l-popup>hi</l-popup>
     </l-marker>
 
-    <l-marker v-for="group in groupedMediaData" :lat-lgn="[group.lat, group.lng]" :key="group.n">
+    <l-marker v-for="[k, group] of groupedMediaData" :lat-lng="group.latLng" :key="k">
       <l-popup>
         <ul>
-          <li v-for="popup in group.media" :key="popup.id">
-            {{ popup.title }}
+          <li v-for="popup of group.media" :key="popup.id">
+            <ModalLink target="#contentModal" v-on:click="handlePopupClick(popup)">
+              <a class="">{{ popup.id }} {{ popup.title }}</a>
+            </ModalLink>
           </li>
         </ul>
       </l-popup>
@@ -28,6 +30,7 @@ import 'leaflet/dist/leaflet.css'
 import L from 'leaflet'
 import { getMedia, MediaData } from '@/api'
 import { LMap, LMarker, LPopup, LTileLayer } from '@vue-leaflet/vue-leaflet'
+import ModalLink from '@/components/ModalLink.vue'
 
 // https://github.com/Leaflet/Leaflet/issues/4968
 // ...
@@ -43,13 +46,13 @@ L.Icon.Default.mergeOptions({
 
 class GroupedMediaData {
   n!: number
-  lat!: number
-  lng!: number
+  latLng!: [number, number]
   media!: MediaData[]
 }
 
 @Options({
   components: {
+    ModalLink,
     LMap,
     LTileLayer,
     LMarker,
@@ -79,6 +82,12 @@ export default class TownMap extends Vue {
   // townLongitude = 6
   // townZoom = 14
 
+  handlePopupClick (item: MediaData): void {
+    console.log(this.$parent)
+    console.log(this)
+    // this.$parent!.$refs.mainContentModal.setContent(item.type, item.title, JSON.parse(item.data))
+  }
+
   groupAndPlaceMarkers (list: MediaData[]): void {
     const tmpMap: Map<string, GroupedMediaData> = new Map()
     let n = 1
@@ -87,17 +96,13 @@ export default class TownMap extends Vue {
       if (!tmpMap.has(key)) {
         tmpMap.set(key, {
           n: n,
-          lat: media.latitude,
-          lng: media.longitude,
+          latLng: [media.latitude, media.longitude],
           media: []
         })
       }
-      console.log(tmpMap)
-      console.log(key)
       tmpMap.get(key)!.media.push(media)
       n++
     }
-    console.log('Finished grouping')
     console.log(tmpMap)
     this.groupedMediaData = tmpMap
   }
@@ -109,16 +114,6 @@ export default class TownMap extends Vue {
       // todo
     })
   }
-
-  //  const marker = L.marker([50.4450, 6.8748]).addTo(this.map)
-  // marker.bindPopup('Ich bin ein Test-Popup')
-  // marker.on('click', function (e) { console.log(e) })
-  // for (const media of list) {
-  //  const marker = L.marker([media.latitude, media.longitude]).addTo(this.map)
-  //  marker.bindPopup('<strong>' + media.title + '</strong><em>' + media.type + '</em>' + media.data)
-  // }
-  // console.log(list)
-  // }
 
   // set id (id: number) {
   //   this.townId = id

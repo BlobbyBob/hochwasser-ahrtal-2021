@@ -9,7 +9,18 @@
     <div class="container">
       <div class="col-12 col-md-9 col-lg-7">
         <h1>Hochwasser Ahrtal 2021</h1>
-        <Introduction @mapButtonClick="scrollToMap"/>
+
+        <div class="introduction">
+          <p>
+            Im Jahr 2021 gab es im Südwesten Deutschlands starke Regenfälle, die zu historischen Hochwassern in mehreren
+            Gegenden geführt haben. Das Ahrtal ist eines der am härtesten betroffenen Gebiete. Auf dieser Seite sind
+            verschiedene Beiträge gesammelt, die die Ausmaße der Zerstörungen dokumentieren.
+          </p>
+
+          <div>
+            <BigButton @click="scrollToMap">Karte ansehen</BigButton>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -21,15 +32,15 @@
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
-import Introduction from '@/components/Introduction.vue'
 import Map from '@/views/Map.vue'
+import BigButton from '@/components/BigButton.vue'
 import Credits from '@/components/Credits.vue'
 
 @Options({
   components: {
+    BigButton,
     Credits,
-    Map,
-    Introduction
+    Map
   }
 })
 export default class Home extends Vue {
@@ -70,5 +81,9 @@ export default class Home extends Vue {
   min-height: 100vh;
   background-color: #404040;
   background-image: linear-gradient(to bottom, #404040, #101010);
+}
+
+.introduction {
+  font-size: 1.5em
 }
 </style>

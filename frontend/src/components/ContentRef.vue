@@ -12,7 +12,7 @@
     <a v-if="type !== 'link'" href="#" class="ms-2" @click="e => e.preventDefault()">
       <slot></slot>
     </a>
-    <a v-if="type === 'link'" :href="JSON.parse(data).url" class="ms-2" target="_blank" @click="e => e.stopPropagation()">
+    <a v-if="type === 'link'" :href="JSON.parse(data).url" class="ms-2" @click="openLink">
       <slot></slot>
     </a>
   </div>
@@ -55,6 +55,10 @@ export default class ContentRef extends Vue {
   onClick (e: Event): void {
     this.$emit('click', e)
   }
+
+  openLink (): void {
+    window.open(JSON.parse(this.data).url, '_blank')
+  }
 }
 </script>
 
@@ -63,6 +67,7 @@ export default class ContentRef extends Vue {
   font-size: 1.1em;
   white-space: nowrap;
 }
+
 .bi {
   margin-right: 5px;
 }

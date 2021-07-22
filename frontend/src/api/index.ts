@@ -22,7 +22,7 @@ export class MediaData {
   data!: string
 }
 
-const apiUrl = 'http://hochwasser.digitalbread.de/api'
+const apiUrl = 'https://hochwasser-ahrtal-2021.de/api'
 
 export async function getTowns (): Promise<TownData[]> {
   return fetch(apiUrl + '/towns').then(response => response.json())

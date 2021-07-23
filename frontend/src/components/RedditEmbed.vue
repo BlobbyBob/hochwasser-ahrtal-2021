@@ -1,6 +1,6 @@
 <template>
   <div class="redditEmbed ratio ratio-16x9">
-    <iframe sandbox="allow-scripts allow-popups" :src="url"></iframe>
+    <iframe sandbox="allow-scripts allow-popups" :src="url" height="600" allowfullscreen></iframe>
   </div>
 </template>
 

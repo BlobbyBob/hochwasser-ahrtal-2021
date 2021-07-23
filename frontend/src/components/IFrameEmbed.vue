@@ -1,6 +1,6 @@
 <template>
   <div class="iframeEmbed">
-    <iframe sandbox="allow-scripts allow-popups" :src="url" :height="height"></iframe>
+    <iframe sandbox="allow-scripts allow-popups" :src="url" :height="height" allowfullscreen></iframe>
   </div>
 </template>
 

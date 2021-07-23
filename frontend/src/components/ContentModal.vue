@@ -62,7 +62,7 @@ export default class ContentModal extends Vue {
         break
       case 'reddit':
         this.size = 'md'
-        this.redditUrl = `https://www.redditmedia.com/r/gifs/comments/${data.postId}?ref_source=embed&amp;ref=share&amp;embed=true`
+        this.redditUrl = `https://www.redditmedia.com/r/${data.sub}/comments/${data.postId}?ref_source=embed&amp;ref=share&amp;embed=true`
         break
       case 'youtube':
         this.size = 'xl'

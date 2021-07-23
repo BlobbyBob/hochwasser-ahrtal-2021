@@ -1,5 +1,5 @@
 <template>
-  <div class="redditEmbed ratio ratio-16x9">
+  <div class="redditEmbed">
     <iframe sandbox="allow-scripts allow-popups" :src="url" height="600" allowfullscreen></iframe>
   </div>
 </template>
@@ -18,5 +18,7 @@ export default class RedditEmbed extends Vue {
 </script>
 
 <style lang="scss" scoped>
-
+iframe {
+  width: 100%
+}
 </style>

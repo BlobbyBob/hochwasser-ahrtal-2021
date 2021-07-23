@@ -5,7 +5,7 @@
         &copy; hochwasser-ahrtal-2021.de | Ein Projekt von Ben Swierzy und Daniel Meyer.
       </div>
       <div>
-        <a href="https://github.com/BlobbyBob/hochwasser-ahrtal-2021" title="Projekt auf GitHub besuchen">
+        <a href="https://github.com/BlobbyBob/hochwasser-ahrtal-2021" target="_blank" title="Projekt auf GitHub besuchen">
           <BootstrapIcon icon="github" size="3x"/>
         </a>
       </div>

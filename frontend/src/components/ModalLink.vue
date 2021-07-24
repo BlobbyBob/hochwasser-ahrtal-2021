@@ -1,5 +1,5 @@
 <template>
-  <a data-bs-toggle="modal" :data-bs-target="target">
+  <a data-bs-toggle="modal" :data-bs-target="target" href="javascript:void(0)">
     <slot></slot>
   </a>
 </template>

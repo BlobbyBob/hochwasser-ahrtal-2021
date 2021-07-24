@@ -10,11 +10,14 @@
         <l-popup :options="{maxWidth: 2000, className: 'popup-custom'}">
           <div class="d-flex flex-column align-items-start">
             <div v-for="popup of group.media" :key="popup.id">
-              <ModalLink target="#contentModal" @click="handlePopupClick(popup)">
                 <ContentRef :image="popup.format === 'image'" :video="popup.format === 'video'" :type="popup.type" :data="popup.data" class="modal-link">
-                  {{ popup.title }} ({{ dateFormat(new Date(popup.timestamp)) }})
+                  <div v-if="popup.type === 'link'">
+                    <a :href="JSON.parse(popup.data).url" target="_blank">{{ popup.title }} ({{ dateFormat(new Date(popup.timestamp)) }})</a>
+                  </div>
+                  <ModalLink v-if="popup.type !== 'link'" target="#contentModal" @click="handlePopupClick(popup)">
+                    {{ popup.title }} ({{ dateFormat(new Date(popup.timestamp)) }})
+                  </ModalLink>
                 </ContentRef>
-              </ModalLink>
             </div>
           </div>
         </l-popup>

@@ -9,12 +9,7 @@
       <BootstrapIcon v-if="type === 'youtube'" icon="youtube" style="color: #ff0404"/>
       <BootstrapIcon v-if="type === 'link'" icon="box-arrow-up-right"/>
     </span>
-    <a v-if="type !== 'link'" href="#" class="ms-2" @click="e => e.preventDefault()">
-      <slot></slot>
-    </a>
-    <a v-if="type === 'link'" :href="JSON.parse(data).url" class="ms-2" @click="openLink">
-      <slot></slot>
-    </a>
+    <slot></slot>
   </div>
 </template>
 
@@ -51,15 +46,6 @@ export default class ContentRef extends Vue {
   video!: boolean
   // eslint-disable-next-line
   data!: any
-
-  onClick (e: Event): void {
-    this.$emit('click', e)
-  }
-
-  openLink (e: Event): void {
-    e.stopImmediatePropagation()
-    window.open(JSON.parse(this.data).url, '_blank')
-  }
 }
 </script>
 

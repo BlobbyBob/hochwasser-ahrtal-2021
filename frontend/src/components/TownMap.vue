@@ -1,9 +1,10 @@
 <template>
   <div id="townMap">
-    <l-map ref="maptest" style="height: 70vh" :center="[latitude, longitude]" :zoom="zoom">
+    <l-map ref="maptest" style="height: 70vh" :center="[latitude, longitude]" :zoom="zoom" minZoom="13" maxZoom="19">
       <l-tile-layer
         url="https://{s}.tile.osm.org/{z}/{x}/{y}.png"
-        attribution="&copy; <a href='https://osm.org/copyright'>OpenStreetMap</a> contributors"/>
+        attribution="&copy; <a href='https://osm.org/copyright'>OpenStreetMap</a> contributors"
+      />
 
       <l-marker v-for="[k, group] of groupedMediaData" :lat-lng="group.latLng" :key="k">
         <l-popup :options="{maxWidth: 2000, className: 'popup-custom'}">

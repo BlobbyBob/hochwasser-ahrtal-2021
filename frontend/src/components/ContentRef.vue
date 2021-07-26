@@ -1,5 +1,5 @@
 <template>
-  <div @click="onClick" class="d-flex align-items-baseline">
+  <div class="d-flex align-items-baseline">
     <span class="icons">
       <BootstrapIcon v-if="image" icon="image"/>
       <BootstrapIcon v-if="video" icon="camera-video"/>
@@ -8,6 +8,7 @@
       <BootstrapIcon v-if="type === 'iframe'" icon="newspaper"/>
       <BootstrapIcon v-if="type === 'youtube'" icon="youtube" style="color: #ff0404"/>
       <BootstrapIcon v-if="type === 'link'" icon="box-arrow-up-right"/>
+      <BootstrapIcon v-if="type === 'img'" icon="file-earmark-image"/>
     </span>
     <slot></slot>
   </div>
@@ -35,9 +36,6 @@ import BootstrapIcon from '@dvuckovic/vue3-bootstrap-icons'
       required: false,
       default: {}
     }
-  },
-  emits: {
-    click: null
   }
 })
 export default class ContentRef extends Vue {

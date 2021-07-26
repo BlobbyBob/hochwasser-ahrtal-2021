@@ -18,6 +18,7 @@ CREATE TABLE media
     longitude FLOAT        NOT NULL,
     type      VARCHAR(32)  NOT NULL,
     data      TEXT         NULL DEFAULT NULL,
+    disabled  BOOL         NOT NULL DEFAULT FALSE,
     FOREIGN KEY `fk_media_towns` (`town`) REFERENCES `towns` (`id`) ON UPDATE CASCADE
 );
 

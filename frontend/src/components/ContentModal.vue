@@ -6,6 +6,7 @@
       <RedditEmbed v-if="type === 'reddit'" :url="redditUrl"/>
       <IFrameEmbed v-if="type === 'iframe'" :url="iframeUrl" :height="iframeHeight"/>
       <YoutubeEmbed v-if="type === 'youtube'" :url="youtubeUrl"/>
+      <ImgEmbed v-if="type === 'img'" :url="imgUrl" :alt="title"/>
     </ModalBody>
   </Modal>
 </template>
@@ -19,9 +20,11 @@ import TwitterEmbed from '@/components/TwitterEmbed.vue'
 import RedditEmbed from '@/components/RedditEmbed.vue'
 import YoutubeEmbed from '@/components/YoutubeEmbed.vue'
 import IFrameEmbed from '@/components/IFrameEmbed.vue'
+import ImgEmbed from '@/components/ImgEmbed.vue'
 
 @Options({
   components: {
+    ImgEmbed,
     IFrameEmbed,
     YoutubeEmbed,
     RedditEmbed,
@@ -34,18 +37,19 @@ import IFrameEmbed from '@/components/IFrameEmbed.vue'
 export default class ContentModal extends Vue {
   size: 'sm' | 'md' | 'lg' | 'xl' = 'lg'
   title = ''
-  type: 'twitter' | 'reddit' | 'iframe' | 'youtube' | 'link' | 'blank' = 'blank'
+  type: 'twitter' | 'reddit' | 'iframe' | 'youtube' | 'link' | 'img' | 'blank' = 'blank'
 
   tweetId = -1
   twitterIframeUrl = ''
   youtubeUrl = ''
   redditUrl = ''
   iframeUrl = ''
+  imgUrl = ''
   iframeHeight = 0
 
   // todo create explicit data type
   // eslint-disable-next-line
-  public setContent (type: 'twitter' | 'reddit' | 'iframe' | 'youtube' | 'link' | 'blank', title: string, data: any): void {
+  public setContent (type: 'twitter' | 'reddit' | 'iframe' | 'youtube' | 'link' | 'img' | 'blank', title: string, data: any): void {
     this.type = type
     this.title = title
 
@@ -70,6 +74,10 @@ export default class ContentModal extends Vue {
         if (data.start) {
           this.youtubeUrl += `?start=${data.start}`
         }
+        break
+      case 'img':
+        this.size = 'xl'
+        this.imgUrl = data.url
         break
     }
   }

@@ -75,7 +75,7 @@ $app->get('/api/media/{town}', function (Request $request, Response $response, a
         return $response->withStatus(404, 'Not Found');
     }
 
-    $stmt = getPDO()->prepare('SELECT * FROM media WHERE town = ?');
+    $stmt = getPDO()->prepare('SELECT * FROM media WHERE town = ? AND disabled = 0');
     $stmt->execute([$town->id]);
 
     $medias = [];

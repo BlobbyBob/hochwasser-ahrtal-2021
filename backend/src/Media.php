@@ -15,6 +15,7 @@ class Media
     public $type;
     public $format;
     public $data;
+    public $disabled;
 
     public function setTypes()
     {
@@ -27,5 +28,6 @@ class Media
         $this->type = (string) $this->type;
         $this->format = (string) $this->format;
         $this->data = (string) $this->data;
+        $this->disabled = (bool) $this->disabled;
     }
 }

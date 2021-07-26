@@ -1,9 +1,17 @@
 <template>
   <router-view/>
+  <GDPRModal/>
 </template>
 
 <script lang="ts">
-import { Vue } from 'vue-class-component'
+import { Options, Vue } from 'vue-class-component'
+import GDPRModal from '@/components/GDPRModal.vue'
+
+@Options({
+  components: {
+    GDPRModal
+  }
+})
 export default class App extends Vue {
 }
 </script>

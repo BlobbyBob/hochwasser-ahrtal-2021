@@ -8,7 +8,7 @@
       <BootstrapIcon v-if="type === 'iframe'" icon="newspaper"/>
       <BootstrapIcon v-if="type === 'youtube'" icon="youtube" style="color: #ff0404"/>
       <BootstrapIcon v-if="type === 'link'" icon="box-arrow-up-right"/>
-      <BootstrapIcon v-if="type === 'img'" icon="file-earmark-image"/>
+      <BootstrapIcon v-if="type === 'img'" icon="camera"/>
     </span>
     <slot></slot>
   </div>

@@ -17,8 +17,32 @@ CREATE TABLE media
     latitude  FLOAT        NOT NULL,
     longitude FLOAT        NOT NULL,
     type      VARCHAR(32)  NOT NULL,
-    data      TEXT         NULL DEFAULT NULL,
+    data      TEXT         NULL     DEFAULT NULL,
     disabled  BOOL         NOT NULL DEFAULT FALSE,
     FOREIGN KEY `fk_media_towns` (`town`) REFERENCES `towns` (`id`) ON UPDATE CASCADE
 );
 
+CREATE TABLE contact
+(
+    id        INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    date      DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    name      VARCHAR(128) NOT NULL,
+    email     VARCHAR(128) NOT NULL,
+    request   TEXT         NOT NULL,
+    latitude  FLOAT        NOT NULL,
+    longitude FLOAT        NOT NULL,
+    copyright VARCHAR(8)   NOT NULL,
+    media     INT UNSIGNED NULL     DEFAULT NULL,
+    FOREIGN KEY `fk_contact_media` (`media`) REFERENCES `media` (`id`) ON UPDATE CASCADE
+);
+
+CREATE TABLE complaints
+(
+    id      INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    date    DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    name    VARCHAR(128) NOT NULL,
+    email   VARCHAR(128) NOT NULL,
+    request TEXT         NOT NULL,
+    media   INT UNSIGNED NOT NULL,
+    FOREIGN KEY `fk_complaints_media` (`media`) REFERENCES `media` (`id`) ON UPDATE CASCADE
+);

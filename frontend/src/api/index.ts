@@ -22,6 +22,23 @@ export class MediaData {
   data!: string
 }
 
+export class ContactData {
+  name!: string
+  email!: string
+  request!: string
+  latitude!: number
+  longitude!: number
+  copyright!: string
+  gdpr!: string
+}
+
+export class ComplaintData {
+  name!: string
+  email!: string
+  request!: string
+  gdpr!: string
+}
+
 const apiUrl = 'https://hochwasser-ahrtal-2021.de/api'
 
 export async function getTowns (): Promise<TownData[]> {
@@ -34,4 +51,26 @@ export async function getTown (name: string): Promise<TownData> {
 
 export async function getMedia (id: number): Promise<MediaData[]> {
   return fetch(apiUrl + '/media/' + id).then(response => response.json())
+}
+
+export async function postContact (contact: ContactData | {[k: string]: FormDataEntryValue}): Promise<Response> {
+  return fetch(apiUrl + '/contact', {
+    method: 'POST',
+    mode: 'cors',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(contact)
+  })
+}
+
+export async function postComplaint (complaint: ComplaintData | {[k: string]: FormDataEntryValue}): Promise<Response> {
+  return fetch(apiUrl + '/contact', {
+    method: 'POST',
+    mode: 'cors',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(complaint)
+  })
 }

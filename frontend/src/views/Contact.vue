@@ -3,7 +3,7 @@
     <Menu/>
     <div class="container">
       <section class="row justify-content-center">
-        <form class="col-sm-12 col-md-10 col-lg-8">
+        <form class="col-sm-12 col-md-10 col-lg-8" @submit="sendForm">
           <h1 class="text-center">Beiträge Einreichen</h1>
           <p>
             Das Projekt freut sich stetig über neue Beiträge. Bitte beachtet, dass wir aus Urheberrechtsgründen nicht
@@ -88,11 +88,23 @@
 import { Options, Vue } from 'vue-class-component'
 import Menu from '@/components/Menu.vue'
 import ModalLink from '@/components/ModalLink.vue'
+import { postContact } from '@/api'
 
 @Options({
-  components: { ModalLink, Menu }
+  components: {
+    ModalLink,
+    Menu
+  }
 })
 export default class Contact extends Vue {
+  sendForm (e: Event): void {
+    e.preventDefault()
+    if (e.target instanceof HTMLFormElement) {
+      const formData = new FormData(e.target)
+      const formObject = Object.fromEntries(formData)
+      postContact(formObject).then(() => console.log('SUCCESS')).catch(response => console.log('ERROR', response))
+    }
+  }
 }
 </script>
 

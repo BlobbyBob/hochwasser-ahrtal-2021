@@ -19,23 +19,30 @@
             ermitteln. Schiebt hierzu einfach die Karte an die richtige Stelle und lest Längen- und Breitengrad als
             letzte beiden Zahlen in der URL ab.
           </p>
+
+          <div v-show="formStatus === 1" class="alert alert-success">Einreichung abgesendet</div>
+          <div v-show="formStatus === 2" class="alert alert-warning">Einreichung enthält ungültige Daten</div>
+          <div v-show="formStatus === 3" class="alert alert-error">
+            Einreichung konnte nicht gesendet werden. Überprüfen deine Netzwerkverbindung
+          </div>
+
           <div>
             <label class="form-label" for="nameInput">
               Name:
             </label>
-            <input type="text" class="form-control" name="name" maxlength="128" id="nameInput">
+            <input type="text" class="form-control" name="name" maxlength="128" id="nameInput" required>
           </div>
           <div>
             <label class="form-label" for="emailInput">
               E-Mail:
             </label>
-            <input type="email" class="form-control" name="email" maxlength="128" id="emailInput">
+            <input type="email" class="form-control" name="email" maxlength="128" id="emailInput" required>
           </div>
           <div>
             <label class="form-label" for="contentInput">
               Inhalt:
             </label>
-            <textarea type="text" class="form-control" name="content" maxlength="4000" id="contentInput"></textarea>
+            <textarea type="text" class="form-control" name="request" maxlength="4000" id="contentInput" required></textarea>
           </div>
           <div>
             <label class="form-label" for="latitudeInput">
@@ -44,10 +51,10 @@
             <div class="row">
               <div class="col-6">
                 <input type="number" class="form-control" min="50.35" max="50.6" placeholder="Breitengrad"
-                       id="latitudeInput">
+                       id="latitudeInput" required>
               </div>
               <div class="col-6">
-                <input type="number" class="form-control" min="6.6" max="7.25" placeholder="Längengrad">
+                <input type="number" class="form-control" min="6.6" max="7.25" placeholder="Längengrad" required>
               </div>
             </div>
           </div>
@@ -97,12 +104,26 @@ import { postContact } from '@/api'
   }
 })
 export default class Contact extends Vue {
+  formStatus = 0
+
   sendForm (e: Event): void {
     e.preventDefault()
     if (e.target instanceof HTMLFormElement) {
       const formData = new FormData(e.target)
       const formObject = Object.fromEntries(formData)
-      postContact(formObject).then(() => console.log('SUCCESS')).catch(response => console.log('ERROR', response))
+      postContact(formObject).then(response => {
+        if (response.status < 400) {
+          this.formStatus = 1
+          const form = document.querySelector('#complaintModal form')
+          if (form instanceof HTMLFormElement) {
+            form.reset()
+          }
+        } else {
+          this.formStatus = 2
+        }
+      }).catch(() => {
+        this.formStatus = 3
+      })
     }
   }
 }

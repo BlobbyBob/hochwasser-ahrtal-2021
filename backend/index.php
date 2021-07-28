@@ -24,12 +24,22 @@ getPDO()->exec('SET CHARACTER SET UTF8');
 $app = AppFactory::create();
 
 // todo this CORS workaround is only for development. Remove in production
-$app->add(function ($request, $handler) {
+$app->add(function (Request $request, $handler) {
     $response = $handler->handle($request);
+
+    $allowOrigin = 'hochwasser-ahrtal-2021.de';
+    $origin = $request->getHeader('Origin');
+    if (count($origin) == 1) {
+        if (array_search(strpos($origin[0], 'hochwasser-ahrtal-2021.de'), [7, 8, 11, 12])) {
+            $allowOrigin = $origin[0];
+        }
+    }
+
     return $response
-        ->withHeader('Access-Control-Allow-Origin', 'hochwasser-ahrtal-2021.de, www.hochwasser-ahrtal-2021.de')
+        ->withHeader('Access-Control-Allow-Origin', $allowOrigin)
         ->withHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept, Origin')
-        ->withHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+        ->withHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
+        ->withHeader('Vary', 'Origin');
 });
 
 $app->addErrorMiddleware(false, true, true);

@@ -10,14 +10,16 @@
         <l-popup :options="{maxWidth: 2000, className: 'popup-custom'}">
           <div class="d-flex flex-column align-items-start">
             <div v-for="popup of group.media" :key="popup.id">
-                <ContentRef :image="popup.format === 'image'" :video="popup.format === 'video'" :type="popup.type" :data="popup.data" class="modal-link">
-                  <div v-if="popup.type === 'link'">
-                    <a :href="JSON.parse(popup.data).url" target="_blank">{{ popup.title }} ({{ dateFormat(new Date(popup.timestamp)) }})</a>
-                  </div>
-                  <ModalLink v-if="popup.type !== 'link'" target="#contentModal" @click="handlePopupClick(popup)">
-                    {{ popup.title }} ({{ dateFormat(new Date(popup.timestamp)) }})
-                  </ModalLink>
-                </ContentRef>
+              <ContentRef :image="popup.format === 'image'" :video="popup.format === 'video'" :type="popup.type"
+                          :data="popup.data" class="modal-link">
+                <div v-if="popup.type === 'link'">
+                  <a :href="JSON.parse(popup.data).url" target="_blank">{{ popup.title }}
+                    ({{ dateFormat(new Date(popup.timestamp)) }})</a>
+                </div>
+                <ModalLink v-if="popup.type !== 'link'" target="#contentModal" @click="handlePopupClick(popup)">
+                  {{ popup.title }} ({{ dateFormat(new Date(popup.timestamp)) }})
+                </ModalLink>
+              </ContentRef>
             </div>
           </div>
         </l-popup>
@@ -82,7 +84,7 @@ export default class TownMap extends Vue {
   zoom!: number
 
   handlePopupClick (item: MediaData): void {
-    (this.$parent!.$refs.mainContentModal as ContentModal).setContent(item.type, item.title, JSON.parse(item.data))
+    if (this.$parent) (this.$parent.$refs.mainContentModal as ContentModal).setContent(item.id, item.type, item.title, JSON.parse(item.data))
   }
 
   groupAndPlaceMarkers (list: MediaData[]): void {
@@ -97,7 +99,8 @@ export default class TownMap extends Vue {
           media: []
         })
       }
-      tmpMap.get(key)!.media.push(media)
+      const v = tmpMap.get(key)
+      if (v) v.media.push(media)
       n++
     }
     this.groupedMediaData = tmpMap

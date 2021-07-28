@@ -9,7 +9,7 @@
       <div>
         <a @click="back" class="pe-auto">
           <BootstrapIcon icon="chevron-left" size="1x" class="pr-3"/>
-          Zurück zur Karte
+          Zurück
         </a>
       </div>
     </div>

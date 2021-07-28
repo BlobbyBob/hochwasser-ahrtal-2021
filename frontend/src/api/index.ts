@@ -65,7 +65,7 @@ export async function postContact (contact: ContactData | {[k: string]: FormData
 }
 
 export async function postComplaint (complaint: ComplaintData | {[k: string]: FormDataEntryValue}): Promise<Response> {
-  return fetch(apiUrl + '/contact', {
+  return fetch(apiUrl + '/complaint', {
     method: 'POST',
     mode: 'cors',
     headers: {

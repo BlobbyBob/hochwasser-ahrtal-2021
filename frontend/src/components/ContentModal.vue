@@ -12,7 +12,7 @@
       <RedditEmbed v-if="type === 'reddit'" :url="redditUrl"/>
       <IFrameEmbed v-if="type === 'iframe'" :url="iframeUrl" :height="iframeHeight"/>
       <YoutubeEmbed v-if="type === 'youtube'" :url="youtubeUrl"/>
-      <ImgEmbed v-if="type === 'img'" :url="imgUrl" :alt="title"/>
+      <ImgEmbed v-if="type === 'img'" :url="imgUrl" :alt="title" :copyright="imgCopyright"/>
     </ModalBody>
   </Modal>
   <Modal id="complaintModal" size="xl">
@@ -102,8 +102,9 @@ export default class ContentModal extends Vue {
   youtubeUrl = ''
   redditUrl = ''
   iframeUrl = ''
-  imgUrl = ''
   iframeHeight = 0
+  imgUrl = ''
+  imgCopyright = ''
 
   complaintStatus = 0
 
@@ -140,6 +141,7 @@ export default class ContentModal extends Vue {
       case 'img':
         this.size = 'xl'
         this.imgUrl = data.url
+        this.imgCopyright = data.copyright ? data.copyright : ''
         break
     }
   }

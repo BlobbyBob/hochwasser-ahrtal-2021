@@ -39,7 +39,7 @@ towns = [("1", "Schuld"),
          ("19", "Sinzig"),
          ("20", "Liers")]
 
-types = ["twitter", "youtube", "iframe", "link", "reddit"]
+types = ["twitter", "youtube", "iframe", "link", "reddit", "img"]
 formats = ["image", "video"]
 
 print("Hochwasser SQL Generator v1")
@@ -59,7 +59,7 @@ type = types[readType("Typ:", int) - 1]
 print("Formate:")
 for i, format in enumerate(formats):
     print(f"  {i + 1}) {format}")
-format = formats[readType("Format:", int) - 1]
+format = formats[readType("Format: ", int) - 1]
 
 while True:
     lat, long = parseLatLong(latlong)
@@ -93,7 +93,15 @@ elif type == 'link':
 elif type == 'reddit':
     sub = input("Sub: ")
     postId = input("Post ID: ")
-    data = '{"sub":"' + sub + ',"postId":"' + postId + '"}'
+    data = '{"sub":"' + sub + '","postId":"' + postId + '"}'
+
+elif type == 'img':
+    url = input("URL: ")
+    copyright = input("Copyright: ")
+    if len(copyright) == 0:
+        data = '{"url":"' + url + '","copyright":"' + copyright + '"}'
+    else:
+        data = '{"url":"' + url + '"}'
 
 with open("queries.txt", "a") as f:
     f.write("INSERT INTO `media` (`id`, `town`, `title`, `timestamp`, `latitude`, `longitude`, `type`, `format`, `data`) "

@@ -166,6 +166,17 @@ export default class ContentModal extends Vue {
       })
     }
   }
+
+  mounted (): void {
+    const m = document.getElementById('contentModal')
+    // eslint-disable-next-line
+    const component = this
+    if (m) {
+      m.addEventListener('hidden.bs.modal', () => {
+        component.setContent(-1, 'blank', '', {})
+      })
+    }
+  }
 }
 </script>
 

@@ -19,7 +19,11 @@
           Mit freundlicher Unterstützung von Annika.
         </div>
       </div>
-      <div>
+      <div class="social">
+        <a href="https://twitter.com/HochwasserAhr21" target="_blank"
+           title="Projekt auf Twitter besuchen">
+          <BootstrapIcon icon="twitter" size="3x"/>
+        </a>
         <a href="https://github.com/BlobbyBob/hochwasser-ahrtal-2021" target="_blank"
            title="Projekt auf GitHub besuchen">
           <BootstrapIcon icon="github" size="3x"/>
@@ -72,6 +76,10 @@ $creditColor: #ffffff;
     border-left: 1px solid white;
     margin-left: 10px;
     padding-left: 10px;
+  }
+
+  .social a {
+    margin-left: 1.5em;
   }
 }
 </style>

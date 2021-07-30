@@ -55,7 +55,7 @@ latlong = input("Koordinaten: ")
 print("Typen:")
 for i, type in enumerate(types):
     print(f"  {i + 1}) {type}")
-type = types[readType("Typ:", int) - 1]
+type = types[readType("Typ: ", int) - 1]
 print("Formate:")
 for i, format in enumerate(formats):
     print(f"  {i + 1}) {format}")

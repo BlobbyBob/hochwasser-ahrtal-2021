@@ -1,6 +1,6 @@
 <template>
   <div class="credits container">
-    <div class="d-flex justify-content-between align-items-center">
+    <div class="d-md-flex justify-content-between align-items-center d-none as-row">
       <div class="mt-3 d-flex flex-column footer-links">
         <div>
           <router-link to="/kontakt">Beitrag einreichen</router-link>
@@ -20,14 +20,40 @@
         </div>
       </div>
       <div class="social">
-        <a href="https://twitter.com/HochwasserAhr21" target="_blank"
+        <a href="https://twitter.com/HochwasserAhr21" target="_blank" class="ms-3"
            title="Projekt auf Twitter besuchen">
           <BootstrapIcon icon="twitter" size="3x"/>
         </a>
-        <a href="https://github.com/BlobbyBob/hochwasser-ahrtal-2021" target="_blank"
+        <a href="https://github.com/BlobbyBob/hochwasser-ahrtal-2021" target="_blank" class="ms-3"
            title="Projekt auf GitHub besuchen">
           <BootstrapIcon icon="github" size="3x"/>
         </a>
+      </div>
+    </div>
+
+    <!-- Mobile layout -->
+    <div class="mt-4 d-md-none justify-content-between align-items-center d-flex row text-center">
+      <div class="mt-4 d-inline-flex flex-column align-items-center col-12">
+        <span>&copy; hochwasser-ahrtal-2021.de</span>
+        <div class="credit-names-sm">
+          Ein Projekt von Ben Swierzy und Daniel Meyer.<br>
+          Mit freundlicher Unterstützung von Annika.
+        </div>
+      </div>
+      <div class="mt-4 social col-12">
+        <a href="https://twitter.com/HochwasserAhr21" target="_blank" class="m-2"
+           title="Projekt auf Twitter besuchen">
+          <BootstrapIcon icon="twitter" size="3x"/>
+        </a>
+        <a href="https://github.com/BlobbyBob/hochwasser-ahrtal-2021" target="_blank" class="m-2"
+           title="Projekt auf GitHub besuchen">
+          <BootstrapIcon icon="github" size="3x"/>
+        </a>
+      </div>
+      <div class="mt-4 col-12 d-flex justify-content-center flex-column footer-links">
+        <router-link to="/kontakt">Beitrag einreichen</router-link>
+        <ModalLink target="#gdprModal">Datenschutzerklärung</ModalLink>
+        <router-link to="/impressum">Impressum</router-link>
       </div>
     </div>
   </div>
@@ -78,8 +104,10 @@ $creditColor: #ffffff;
     padding-left: 10px;
   }
 
-  .social a {
-    margin-left: 1.5em;
+  .credit-names-sm {
+    border-top: 1px solid white;
+    margin-top: 10px;
+    padding-top: 10px;
   }
 }
 </style>

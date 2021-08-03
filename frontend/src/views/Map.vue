@@ -59,9 +59,14 @@ h1 {
   padding-top: 3em;
 }
 
+.map {
+  overflow-x: auto;
+}
+
 svg {
   background-color: lightgreen;
   margin: 1em 0;
   border-radius: 20px;
+  min-height: 30rem;
 }
 </style>

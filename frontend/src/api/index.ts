@@ -8,6 +8,8 @@ export class TownData {
   longitude!: number
   zoom!: number
   label!: 'left' | 'right'
+  prev!: string
+  next!: string
 }
 
 export class MediaData {

@@ -3,8 +3,24 @@
     <Menu/>
     <section id="town">
       <div class="container">
-        <div class="town">
-          <h1 v-if="mapDataReady" class="pb-2">Ort: {{ displayTownName }}</h1>
+        <div class="row align-items-center mb-2" id="town-navigation">
+          <div class="col-md-3 text-center text-md-start px-2">
+            <router-link :to="'/ort/'+prevTown.route" class="align-middle fs-5" v-if="prevTown">
+              <BootstrapIcon icon="arrow-up-short" class="d-md-none" />
+              <BootstrapIcon icon="arrow-left-short" class="d-none d-md-inline" />
+              {{ prevTown.name }}
+            </router-link>
+          </div>
+          <div class="col-md-6 text-center py-2">
+            <h1 v-if="mapDataReady" class="m-0">{{ currentTownName }}</h1>
+          </div>
+          <div class="col-md-3 text-center text-md-end py-2">
+            <router-link :to="'/ort/'+nextTown.route" class="align-middle fs-5" v-if="nextTown">
+              <BootstrapIcon icon="arrow-down-short" class="d-md-none" />
+              {{ nextTown.name }}
+              <BootstrapIcon icon="arrow-right-short" class="d-none d-md-inline" />
+            </router-link>
+          </div>
         </div>
         <div v-if="!mapDataReady && !error" class="alert alert-primary">Lade Karte...</div>
         <div v-if="error" class="alert alert-primary"><strong>Fehler:</strong> Karte kann nicht geladen werden.
@@ -20,66 +36,92 @@
 </template>
 
 <script lang="ts">
-import { Options, Vue } from 'vue-class-component'
 import { useRoute } from 'vue-router'
+import BootstrapIcon from '@dvuckovic/vue3-bootstrap-icons'
 import TownMap from '@/components/TownMap.vue'
 import Menu from '@/components/Menu.vue'
 import Credits from '@/components/Credits.vue'
 import ContentModal from '@/components/ContentModal.vue'
 import { getTown, TownData } from '@/api'
+import { defineComponent } from 'vue'
 
-@Options({
+export default defineComponent({
   components: {
+    BootstrapIcon,
     ContentModal,
     Credits,
     TownMap,
     Menu
   },
-  props: {}
-})
-export default class Town extends Vue {
-  currentRoute = useRoute()
-  internalTown: TownData | undefined
-  mapDataReady = false
-  error = false
 
-  get displayTownName (): string {
-    return this.town ? this.town.name : this.ucfirst(this.routeName)
-  }
-
-  get routeName (): string {
-    let routeName: string
-    if (typeof this.currentRoute.params.name === 'string') {
-      routeName = this.currentRoute.params.name
-    } else {
-      routeName = this.currentRoute.params.name[0]
+  data () {
+    return {
+      currentRoute: useRoute(),
+      mapDataReady: false,
+      error: false,
+      town: undefined as TownData | undefined,
+      prevTown: undefined as TownData | undefined,
+      nextTown: undefined as TownData | undefined
     }
+  },
+  computed: {
+    currentTownName (): string {
+      return this.town ? this.town.name : this.ucfirst(this.routeName)
+    },
 
-    return routeName
-  }
+    routeName (): string {
+      let routeName: string
+      if (typeof this.$route.params.name === 'string') {
+        routeName = this.$route.params.name
+      } else {
+        routeName = this.$route.params.name[0]
+      }
 
-  get town (): TownData | undefined {
-    return this.internalTown
-  }
+      return routeName
+    }
+  },
 
-  set town (town: TownData | undefined) {
-    this.internalTown = town
-  }
+  methods: {
+    drawHeader (): void {
+      this.error = false
+      getTown(this.routeName).then(town => {
+        this.town = town
+        this.mapDataReady = true
 
-  ucfirst (s: string): string {
-    return s.charAt(0).toUpperCase() + s.slice(1)
-  }
+        // prev town name
+        getTown(town.prev).then(prevTown => {
+          this.prevTown = prevTown
+        })
 
-  mounted (): void {
-    this.error = false
-    getTown(this.routeName).then(town => {
-      this.town = town
-      this.mapDataReady = true
-    }).catch(() => {
-      this.error = true
-    })
+        // next town name
+        getTown(town.next).then(nextTown => {
+          this.nextTown = nextTown
+        })
+      }).catch(() => {
+        this.error = true
+      })
+    },
+    ucfirst (s: string): string {
+      return s.charAt(0).toUpperCase() + s.slice(1)
+    }
+  },
+
+  created (): void {
+    // watch for route update if navigating between towns
+    this.$watch(
+      () => this.$route.params,
+      () => {
+        this.drawHeader()
+      },
+      {
+        // trigger once on component creation
+        immediate: true,
+        // https://github.com/vuejs/vue-next/issues/2291 *sigh*
+        flush: 'post'
+      }
+    )
   }
-}
+})
 </script>
 
 <style lang="scss">
@@ -93,5 +135,12 @@ export default class Town extends Vue {
 #town {
   padding-top: 3em;
   padding-bottom: 3em;
+}
+
+#town-navigation {
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
 }
 </style>

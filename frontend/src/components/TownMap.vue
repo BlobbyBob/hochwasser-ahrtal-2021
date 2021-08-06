@@ -110,7 +110,7 @@ export default class TownMap extends Vue {
     return new Intl.DateTimeFormat('de-DE', { dateStyle: 'short' }).format(date)
   }
 
-  mounted (): void {
+  drawMap (): void {
     getMedia(this.id).then(res => {
       this.groupAndPlaceMarkers(res)
     }).catch(() => {
@@ -118,9 +118,17 @@ export default class TownMap extends Vue {
     })
   }
 
+  mounted (): void {
+    this.drawMap()
+  }
+
+  updated (): void {
+    this.drawMap()
+  }
+
   beforeUnmount (): void {
     if (this.map) {
-      // this.map.destroy()
+      this.map.remove()
     }
   }
 }

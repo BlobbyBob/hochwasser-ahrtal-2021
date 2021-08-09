@@ -11,6 +11,7 @@ CREATE TABLE towns
 CREATE TABLE media
 (
     id        INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    inserted  DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,
     town      INT UNSIGNED NOT NULL,
     title     VARCHAR(256) NOT NULL,
     timestamp DATETIME     NOT NULL,
@@ -46,3 +47,12 @@ CREATE TABLE complaints
     media   INT UNSIGNED NOT NULL,
     FOREIGN KEY `fk_complaints_media` (`media`) REFERENCES `media` (`id`) ON UPDATE CASCADE
 );
+
+CREATE TABLE personalMedia
+(
+    id      int(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    date    datetime         NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    name    varchar(128)     NOT NULL,
+    email   varchar(128)     NOT NULL,
+    request text             NOT NULL
+)

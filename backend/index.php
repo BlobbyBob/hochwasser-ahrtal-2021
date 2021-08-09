@@ -148,6 +148,15 @@ $app->post('/api/contact', function (Request $request, Response $response) {
         });
 });
 
+$app->post('/api/personal', function (Request $request, Response $response) {
+
+    return postHelper($request, $response, Contact::class,
+        'INSERT INTO personalMedia (name, email, request) VALUES (?, ?, ?)',
+        function (Contact $contact) {
+            return [$contact->name, $contact->email, $contact->request];
+        });
+});
+
 $app->post('/api/complaint', function (Request $request, Response $response) {
 
     return postHelper($request, $response, Complaint::class,

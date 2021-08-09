@@ -49,7 +49,9 @@ for town in towns:
 
 town = readType("Stadt: ", int)
 title = input("Name: ")
+month = 7
 day = readType("Tag: ", int)
+if day < 14: month = 8
 hour = readType("Stunde: ", int)
 latlong = input("Koordinaten: ")
 print("Typen:")
@@ -98,13 +100,13 @@ elif type == 'reddit':
 elif type == 'img':
     url = input("URL: ")
     copyright = input("Copyright: ")
-    if len(copyright) == 0:
+    if len(copyright) > 0:
         data = '{"url":"' + url + '","copyright":"' + copyright + '"}'
     else:
         data = '{"url":"' + url + '"}'
 
 with open("queries.txt", "a") as f:
     f.write("INSERT INTO `media` (`id`, `town`, `title`, `timestamp`, `latitude`, `longitude`, `type`, `format`, `data`) "
-            f"VALUES (NULL, '{town}', '{title}', '2021-07-{day} {hour}:00:00', '{lat}', '{long}', '{type}', '{format}', '{data}');\n")
+            f"VALUES (NULL, '{town}', '{title}', '2021-0{month}-{day:02} {hour}:00:00', '{lat}', '{long}', '{type}', '{format}', '{data}');\n")
 
 print("Query nach queries.txt geschrieben")

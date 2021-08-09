@@ -34,6 +34,12 @@ export class ContactData {
   gdpr!: string
 }
 
+export class PersonalMediaData {
+  name!: string
+  email!: string
+  request!: string
+}
+
 export class ComplaintData {
   name!: string
   email!: string
@@ -63,6 +69,17 @@ export async function postContact (contact: ContactData | {[k: string]: FormData
       'Content-Type': 'application/json'
     },
     body: JSON.stringify(contact)
+  })
+}
+
+export async function postPersonalMedia (complaint: PersonalMediaData | {[k: string]: FormDataEntryValue}): Promise<Response> {
+  return fetch(apiUrl + '/personalMedia', {
+    method: 'POST',
+    mode: 'cors',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(complaint)
   })
 }
 

@@ -17,6 +17,7 @@ try {
 
     $pdo = new PDO(sprintf("mysql:dbname=%s;host=%s", DB_NAME, DB_HOST), DB_USER, DB_PASS);
     $stmt = $pdo->prepare('SELECT * FROM personalMedia WHERE date > CURRENT_TIMESTAMP - 3*3600');
+    $stmt->execute();
 
     /** @var $personalMedia PersonalMedia */
     while (($personalMedia = $stmt->fetchObject(PersonalMedia::class))) {
@@ -26,6 +27,7 @@ try {
     }
 
     $stmt = $pdo->prepare('SELECT * FROM contact WHERE date > CURRENT_TIMESTAMP - 3*3600');
+    $stmt->execute();
 
     /** @var $contact Contact */
     while (($contact = $stmt->fetchObject(Contact::class))) {
@@ -35,6 +37,7 @@ try {
     }
 
     $stmt = $pdo->prepare('SELECT * FROM complaints WHERE date > CURRENT_TIMESTAMP - 3*3600');
+    $stmt->execute();
 
     /** @var $complaint Complaint */
     while (($complaint = $stmt->fetchObject(Complaint::class))) {

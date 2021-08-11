@@ -73,7 +73,7 @@ export async function postContact (contact: ContactData | {[k: string]: FormData
 }
 
 export async function postPersonalMedia (complaint: PersonalMediaData | {[k: string]: FormDataEntryValue}): Promise<Response> {
-  return fetch(apiUrl + '/personalMedia', {
+  return fetch(apiUrl + '/personal', {
     method: 'POST',
     mode: 'cors',
     headers: {

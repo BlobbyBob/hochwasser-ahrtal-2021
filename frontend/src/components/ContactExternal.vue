@@ -2,7 +2,7 @@
   <section class="row justify-content-center">
     <div class="col-sm-12 col-md-10 col-lg-8">
       <h2>Links auf Inhalte einsenden</h2>
-      <p>
+      <p class="text-justify">
         Hier könnt ihr bereits im Internet veröffentlichte Medien einsenden, insbesondere wenn diese auf Twitter
         oder YouTube verfügbar sind. Wir bitten bei allen Einreichungen um die Angabe von (zumindest groben) Koordinaten.
         Unsere Ortskenntnisse sind leider limitiert und erlauben uns nicht jeden Beitrag selbst zu lokalisieren. Die

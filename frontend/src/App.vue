@@ -17,10 +17,13 @@ export default class App extends Vue {
 </script>
 
 <style lang="scss">
-
 body {
   padding: 0;
   margin: 0;
   overflow-x: unset;
+}
+
+.text-justify {
+  text-align: justify !important;
 }
 </style>

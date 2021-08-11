@@ -2,9 +2,10 @@
   <section class="row justify-content-center">
     <div class="col-sm12 col-md-10 col-lg-8">
       <h2>Eigene Dateien einsenden</h2>
-      <p>Wir freuen uns sehr, wenn du uns deine von dir persönlich erstellten Medien zur Verfügung stellen möchtest.
-        Um deine Inhalte hochzuladen, bitten wir dich um eine kurze Beschreibung der Inhalte (Orte, Zeiten, ...) über das
-        Formular unten. Wir melden uns dann per E-Mail bei dir, um das Hochladen der Daten zu organisieren.</p>
+      <p class="text-justify">Wir freuen uns sehr, wenn du uns deine von dir persönlich erstellten Medien zur Verfügung
+        stellen möchtest. Um deine Inhalte hochzuladen, bitten wir dich um eine kurze Beschreibung der Inhalte (Orte,
+        Zeiten, ...) über das Formular unten. Wir melden uns dann per E-Mail bei dir, um das Hochladen der Daten zu
+        organisieren.</p>
       <form @submit="sendForm">
         <div v-show="formStatus === 1" class="alert alert-success">Einreichung abgesendet</div>
         <div v-show="formStatus === 2" class="alert alert-warning">Einreichung enthält ungültige Daten</div>
@@ -27,9 +28,10 @@
           <label class="form-label" for="contentInput">
             Inhalt:
           </label>
-          <textarea type="text" class="form-control" name="request" maxlength="4000" id="contentInput" required></textarea>
+          <textarea type="text" class="form-control" name="request" maxlength="4000" id="contentInput"
+                    required></textarea>
         </div>
-        <div class="form-check pt-4">
+        <div class="form-check pt-4 text-justify">
           <input class="form-check-input" type="checkbox" name="gdpr" id="gdprInput" required>
           <label class="form-check-label pt-0" for="gdprInput">
             Ich willige in die Verarbeitung meiner persönlichen Daten auf Basis der

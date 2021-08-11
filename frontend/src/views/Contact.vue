@@ -2,17 +2,17 @@
   <div class="contact">
     <Menu/>
     <div class="container pb-4">
-      <section class="row justify-content-center">
+      <section class="row justify-content-center pb-4">
         <div class="col-sm-12 col-md-10 col-lg-8">
           <h1 class="text-center">Beiträge einreichen</h1>
-          <p>
+          <p class="text-justify">
             Das Projekt freut sich stetig über neue Beiträge. Bitte beachtet, dass wir aus Urheberrechtsgründen nicht
             alle Inhalte direkt einbinden dürfen. Referenzen auf externe Webseiten sind hingegen immer gestattet,
             reduzieren in Masse aber die Qualität des Projekts. Bei eingebundenen Inhalten geben wir sehr gerne den
             Urheber an. Wenn ihr dies bei euren eigenen Inhalten wünscht, vermerkt dies bitte explizit in der
             Beschreibung.
           </p>
-          <p>
+          <p class="text-justify">
             Wähle bitte zunächst, ob du selbsterstellte Inhalte direkt zu uns hochladen möchtest, oder ob du uns nur
             einen Link auf bereits zum Beispiel in sozialen Medien oder Nachrichten-Webseiten veröffentlichtes
             externes Material übermitteln möchtest.

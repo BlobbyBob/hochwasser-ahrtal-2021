@@ -3,6 +3,7 @@
 use BlobbyBob\HochwasserAhrtal2021\Complaint;
 use BlobbyBob\HochwasserAhrtal2021\Contact;
 use BlobbyBob\HochwasserAhrtal2021\Media;
+use BlobbyBob\HochwasserAhrtal2021\PersonalMedia;
 use BlobbyBob\HochwasserAhrtal2021\Town;
 use Slim\Factory\AppFactory;
 
@@ -152,8 +153,8 @@ $app->post('/api/personal', function (Request $request, Response $response) {
 
     return postHelper($request, $response, PersonalMedia::class,
         'INSERT INTO personalMedia (name, email, request) VALUES (?, ?, ?)',
-        function (Contact $contact) {
-            return [$contact->name, $contact->email, $contact->request];
+        function (PersonalMedia $personalMedia) {
+            return [$personalMedia->name, $personalMedia->email, $personalMedia->request];
         });
 });
 

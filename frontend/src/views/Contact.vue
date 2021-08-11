@@ -17,18 +17,23 @@
             einen Link auf bereits zum Beispiel in sozialen Medien oder Nachrichten-Webseiten veröffentlichtes
             externes Material übermitteln möchtest.
           </p>
-          <div class="row justify-content-around my-4">
-            <div class="col-md-4 text-center border border-white rounded-1 entry-mode-box"
-                 v-bind:class="{ active: entryMode==='personal'}"
-                 @click="entryMode='personal'">
-              <BootstrapIcon icon="image-fill" size="2x" /><br />
-              Eigene Dateien einsenden
+          <div class="row justify-content-around my-2">
+            <div class="col-6 col-md-5 col-xl-4 p-1">
+              <div class="text-center border border-white rounded-1 entry-mode-box"
+                   v-bind:class="{ active: entryMode==='personal'}"
+                   @click="entryMode='personal'">
+                <BootstrapIcon icon="image-fill" size="2x" />
+                <p class="pt-3 m-0">Eigene Dateien einsenden</p>
+              </div>
             </div>
-            <div class="col-md-4 text-center border border-white  rounded-1 entry-mode-box"
-                 v-bind:class="{ active: entryMode==='external'}"
-                 @click="entryMode='external'">
-              <BootstrapIcon icon="box-arrow-up-right" size="2x" /><br />
-              Externe Inhalte einreichen
+
+            <div class="col-6 col-md-5 col-xl-4 p-1">
+              <div class="text-center border border-white  rounded-1 entry-mode-box"
+                   v-bind:class="{ active: entryMode==='external'}"
+                   @click="entryMode='external'">
+                <BootstrapIcon icon="box-arrow-up-right" size="2x" />
+                <p class="pt-3 m-0">Externe Inhalte einreichen</p>
+              </div>
             </div>
           </div>
         </div>
@@ -78,13 +83,12 @@ export default class Contact extends Vue {
   padding: 1rem;
 }
 
-.entry-mode-box:hover,
-.entry-mode-box.active:hover {
+.entry-mode-box:hover {
   background-color: #202020;
 }
 
 .entry-mode-box.active {
-  background-color: #303030;
+  background-color: #202020;
   font-weight: bold;
 }
 

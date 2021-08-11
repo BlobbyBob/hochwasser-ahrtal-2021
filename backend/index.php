@@ -20,11 +20,10 @@ function getPDO(): PDO
     return $GLOBALS['pdo'];
 }
 
-getPDO()->exec('SET CHARACTER SET UTF8');
+getPDO()->exec('SET CHARACTER SET UTF8MB4');
 
 $app = AppFactory::create();
 
-// todo this CORS workaround is only for development. Remove in production
 $app->add(function (Request $request, $handler) {
     $response = $handler->handle($request);
 

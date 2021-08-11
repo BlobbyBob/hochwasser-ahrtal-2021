@@ -25,9 +25,9 @@ class PersonalMedia
     {
         if (!is_null($this->id)) return false;
         if (!is_null($this->date)) return false;
-        if (is_null($this->name) || strlen($this->name) == 0 || strlen($this->name) > 128) return 1;
-        if (is_null($this->email) || strlen($this->email) < 5 || strlen($this->email) > 128 || strpos($this->email, '@') === false) return 2;
-        if (is_null($this->request) || strlen($this->request) == 0 || strlen($this->request) > 4000) return 3;
+        if (is_null($this->name) || strlen($this->name) == 0 || strlen($this->name) > 128) return false;
+        if (is_null($this->email) || strlen($this->email) < 5 || strlen($this->email) > 128 || strpos($this->email, '@') === false) return false;
+        if (is_null($this->request) || strlen($this->request) == 0 || strlen($this->request) > 4000) return false;
 
         return true;
     }

@@ -150,7 +150,7 @@ $app->post('/api/contact', function (Request $request, Response $response) {
 
 $app->post('/api/personal', function (Request $request, Response $response) {
 
-    return postHelper($request, $response, Contact::class,
+    return postHelper($request, $response, PersonalMedia::class,
         'INSERT INTO personalMedia (name, email, request) VALUES (?, ?, ?)',
         function (Contact $contact) {
             return [$contact->name, $contact->email, $contact->request];

@@ -113,7 +113,7 @@ export default class TownMap extends Vue {
   }
 
   drawMap (): void {
-    getMedia(this.id).then(res => {
+    getMedia(this.id, this.filter).then(res => {
       this.groupAndPlaceMarkers(res)
     }).catch(() => {
       // todo

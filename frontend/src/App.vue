@@ -26,4 +26,7 @@ body {
 .text-justify {
   text-align: justify !important;
 }
+.cursor-pointer {
+  cursor: pointer;
+}
 </style>

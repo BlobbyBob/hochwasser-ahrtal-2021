@@ -32,7 +32,7 @@
 import { Options, Vue } from 'vue-class-component'
 import 'leaflet/dist/leaflet.css'
 import L from 'leaflet'
-import { getMedia, MediaData } from '@/api'
+import { getMedia, MediaData, MediaFilter } from '@/api'
 import { LMap, LMarker, LPopup, LTileLayer } from '@vue-leaflet/vue-leaflet'
 import ModalLink from '@/components/ModalLink.vue'
 import ContentModal from '@/components/ContentModal.vue'
@@ -70,7 +70,8 @@ class GroupedMediaData {
     name: String,
     latitude: Number,
     longitude: Number,
-    zoom: Number
+    zoom: Number,
+    filter: MediaFilter
   }
 })
 export default class TownMap extends Vue {
@@ -78,6 +79,7 @@ export default class TownMap extends Vue {
   map!: L.Map
 
   id!: number
+  filter!: MediaFilter
   name!: string
   latitude!: number
   longitude!: number
@@ -115,6 +117,20 @@ export default class TownMap extends Vue {
       this.groupAndPlaceMarkers(res)
     }).catch(() => {
       // todo
+    })
+  }
+
+  filterUpdate (filter: MediaFilter): void {
+    getMedia(this.id, filter).then(res => {
+      this.groupAndPlaceMarkers(res)
+    }).catch(() => {
+      // todo
+    })
+  }
+
+  beforeCreate (): void {
+    this.filter.addListener((filter) => {
+      this.filterUpdate(filter)
     })
   }
 

@@ -6,8 +6,8 @@
         <div class="row align-items-center mb-2" id="town-navigation">
           <div class="col-md-3 text-center text-md-start px-2">
             <router-link :to="'/ort/'+prevTown.route" class="align-middle fs-5" v-if="prevTown">
-              <BootstrapIcon icon="arrow-up-short" class="d-md-none" />
-              <BootstrapIcon icon="arrow-left-short" class="d-none d-md-inline" />
+              <BootstrapIcon icon="arrow-up-short" class="d-md-none"/>
+              <BootstrapIcon icon="arrow-left-short" class="d-none d-md-inline"/>
               {{ prevTown.name }}
             </router-link>
           </div>
@@ -16,19 +16,68 @@
           </div>
           <div class="col-md-3 text-center text-md-end py-2">
             <router-link :to="'/ort/'+nextTown.route" class="align-middle fs-5" v-if="nextTown">
-              <BootstrapIcon icon="arrow-down-short" class="d-md-none" />
+              <BootstrapIcon icon="arrow-down-short" class="d-md-none"/>
               {{ nextTown.name }}
-              <BootstrapIcon icon="arrow-right-short" class="d-none d-md-inline" />
+              <BootstrapIcon icon="arrow-right-short" class="d-none d-md-inline"/>
             </router-link>
           </div>
         </div>
+
+        <div v-show="mapDataReady" class="row mb-4" id="filter">
+          <h5 @click="filterVisible = !filterVisible" class="cursor-pointer">
+            <BootstrapIcon icon="sliders"/>
+            <span class="ms-3">Filter anzeigen</span>
+          </h5>
+          <div v-show="filterVisible" @click="updateBinaryFilters" class="d-flex flex-column">
+            <div class="row align-items-center">
+              <span class="col-2 col-lg-1">Format:</span>
+              <div class="col-auto">
+                <button class="btn btn-success" @click="toggleButton" data-toggle="format:image">
+                  <BootstrapIcon icon="image"/>
+                </button>
+                <button class="btn btn-success" @click="toggleButton" data-toggle="format:video">
+                  <BootstrapIcon icon="camera-video"/>
+                </button>
+              </div>
+            </div>
+            <div class="row align-items-center">
+              <span class="col-2 col-lg-1">Typ:</span>
+              <div class="col-auto">
+                <button class="btn btn-success" @click="toggleButton" data-toggle="type:img">
+                  <BootstrapIcon icon="camera"/>
+                </button>
+                <button class="btn btn-success" @click="toggleButton" data-toggle="type:twitter">
+                  <BootstrapIcon icon="twitter"/>
+                </button>
+                <button class="btn btn-success" @click="toggleButton" data-toggle="type:reddit">
+                  <BootstrapIcon icon="reddit"/>
+                </button>
+                <button class="btn btn-success" @click="toggleButton" data-toggle="type:iframe">
+                  <BootstrapIcon icon="newspaper"/>
+                </button>
+                <button class="btn btn-success" @click="toggleButton" data-toggle="type:youtube">
+                  <BootstrapIcon icon="youtube"/>
+                </button>
+                <button class="btn btn-success" @click="toggleButton" data-toggle="type:link">
+                  <BootstrapIcon icon="box-arrow-up-right"/>
+                </button>
+              </div>
+            </div>
+            <div class="row align-items-center">
+              <span class="col-2 col-lg-1">Datum:</span>
+              <div class="col-6">
+                <NoUiSlider class="py-5" :config="generateSliderConfig()" @update="updateSlider"/>
+              </div>
+            </div>
+          </div>
+        </div>
         <div v-if="!mapDataReady && !error" class="alert alert-primary">Lade Karte...</div>
-        <div v-if="error" class="alert alert-primary"><strong>Fehler:</strong> Karte kann nicht geladen werden.
-          Überprüfe deine Netzwerkverbindung
+        <div v-if="error" class="alert alert-primary">
+          <strong>Fehler:</strong> Karte kann nicht geladen werden. Überprüfe deine Netzwerkverbindung
         </div>
         <TownMap v-if="mapDataReady" :id="town.id" :name="town.name" :latitude="town.latitude"
-                 :longitude="town.longitude" :zoom="town.zoom"/>
-        <ContentModal ref="mainContentModal" />
+                 :longitude="town.longitude" :zoom="town.zoom" :filter="filter"/>
+        <ContentModal ref="mainContentModal"/>
       </div>
     </section>
     <Credits/>
@@ -42,8 +91,10 @@ import TownMap from '@/components/TownMap.vue'
 import Menu from '@/components/Menu.vue'
 import Credits from '@/components/Credits.vue'
 import ContentModal from '@/components/ContentModal.vue'
-import { getTown, TownData } from '@/api'
+import { getTown, MediaFilter, TownData } from '@/api'
 import { defineComponent } from 'vue'
+import NoUiSlider from '@/components/NoUiSlider.vue'
+import { CountPips, Options, PipsMode } from 'nouislider'
 
 export default defineComponent({
   components: {
@@ -51,17 +102,21 @@ export default defineComponent({
     ContentModal,
     Credits,
     TownMap,
-    Menu
+    Menu,
+    NoUiSlider
   },
 
   data () {
     return {
       currentRoute: useRoute(),
       mapDataReady: false,
+      filterVisible: false,
+      filter: new MediaFilter(),
       error: false,
       town: undefined as TownData | undefined,
       prevTown: undefined as TownData | undefined,
-      nextTown: undefined as TownData | undefined
+      nextTown: undefined as TownData | undefined,
+      initialDate: new Date('2021-07-13 00:00:00')
     }
   },
   computed: {
@@ -103,9 +158,72 @@ export default defineComponent({
     },
     ucfirst (s: string): string {
       return s.charAt(0).toUpperCase() + s.slice(1)
+    },
+    updateBinaryFilters (): void {
+      console.log('Update filters')
+      this.filter.format = []
+      if (document.querySelector('#filter button.btn-success[data-toggle="format:image"]')) this.filter.format.push('image')
+      if (document.querySelector('#filter button.btn-success[data-toggle="format:video"]')) this.filter.format.push('video')
+      this.filter.type = []
+      if (document.querySelector('#filter button.btn-success[data-toggle="type:img"]')) this.filter.type.push('img')
+      if (document.querySelector('#filter button.btn-success[data-toggle="type:twitter"]')) this.filter.type.push('twitter')
+      if (document.querySelector('#filter button.btn-success[data-toggle="type:reddit"]')) this.filter.type.push('reddit')
+      if (document.querySelector('#filter button.btn-success[data-toggle="type:iframe"]')) this.filter.type.push('iframe')
+      if (document.querySelector('#filter button.btn-success[data-toggle="type:youtube"]')) this.filter.type.push('youtube')
+      if (document.querySelector('#filter button.btn-success[data-toggle="type:link"]')) this.filter.type.push('link')
+      this.filter.triggerEvent()
+    },
+    toggleButton (e: Event): void {
+      let button = e.target as HTMLElement
+      while (button && button.tagName.toLowerCase() !== 'button') button = button.parentElement as HTMLElement
+      if (!button) return
+      button.classList.toggle('btn-success')
+      button.classList.toggle('btn-danger')
+    },
+    generateSliderConfig (): Options {
+      const dayOffset = (date: Date) => Math.floor((date.getTime() - this.initialDate.getTime()) / 86400000)
+      const days = dayOffset(new Date())
+      const formatter = {
+        to: (num: number) => {
+          const d = new Date(this.initialDate.getTime() + 86400000 * num)
+          return `${d.getDate()}.${d.getMonth() + 1}.${d.getFullYear()}`
+        },
+        from: (str: string) => {
+          const parts = str.split('.')
+          const d = new Date()
+          d.setFullYear(Number.parseInt(parts[2]))
+          d.setMonth(Number.parseInt(parts[1]) - 1)
+          d.setDate(Number.parseInt(parts[0]))
+          return dayOffset(d)
+        }
+      }
+      const options = {
+        start: [0, days],
+        step: 1,
+        connect: true,
+        range: {
+          min: 0,
+          max: days
+        },
+        tooltips: [formatter, formatter],
+        pips: {
+          mode: PipsMode.Count,
+          density: 3,
+          values: 5,
+          format: formatter
+        } as CountPips
+      }
+      console.log(options)
+      return options
+    },
+    updateSlider (vals: string[2]): void {
+      const since = new Date(this.initialDate.getTime() + 86400000 * Number.parseInt(vals[0]))
+      const before = new Date(this.initialDate.getTime() + 86400000 * Number.parseInt(vals[1]))
+      this.filter.since = since
+      this.filter.before = before
+      this.filter.triggerEvent()
     }
   },
-
   created (): void {
     // watch for route update if navigating between towns
     this.$watch(
@@ -141,6 +259,16 @@ export default defineComponent({
   a {
     color: inherit;
     text-decoration: none;
+  }
+}
+
+#filter {
+  > div {
+    margin-left: 1rem;
+  }
+
+  button {
+    margin: 5px;
   }
 }
 </style>

@@ -5,7 +5,6 @@
         url="https://{s}.tile.osm.org/{z}/{x}/{y}.png"
         attribution="&copy; <a href='https://osm.org/copyright'>OpenStreetMap</a> contributors"
       />
-
       <l-marker v-for="[k, group] of groupedMediaData" :lat-lng="group.latLng" :key="k">
         <l-popup :options="{maxWidth: 2000, className: 'popup-custom'}">
           <div class="d-flex flex-column align-items-start">
@@ -139,6 +138,10 @@ export default class TownMap extends Vue {
   }
 
   updated (): void {
+    // Possible leaflet or vue-leaflet bug:
+    // Sometimes map center is not correctly set when updating to another location
+    const map = (this.$refs.maptest as LMap).leafletObject
+    map.setView([this.latitude, this.longitude])
     this.drawMap()
   }
 

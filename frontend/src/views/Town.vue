@@ -32,48 +32,51 @@
               </h5>
             </div>
           </div>
-          <div v-show="filterVisible" @click="updateBinaryFilters" class="flex-column flex-lg-row filter-body py-3 px-4"
-               style="display: flex">
-            <div class="d-flex col-12 col-lg-6 flex-column align-items-center justify-content-center">
-              <div class="row col-12 align-items-center">
-                <span class="col-3 col-lg-2">Format:</span>
-                <div class="col-9 col-lg-10">
-                  <button class="btn btn-success" @click="toggleButton" data-toggle="format:image">
-                    <BootstrapIcon icon="image"/>
-                  </button>
-                  <button class="btn btn-success" @click="toggleButton" data-toggle="format:video">
-                    <BootstrapIcon icon="camera-video"/>
-                  </button>
+          <div id="transitionBase" :class="{filterVisible: filterVisible, filterInvisible: !filterVisible}">
+            <div>
+              <div @click="updateBinaryFilters" class="d-flex flex-column flex-lg-row filter-body py-3 px-4">
+                <div class="d-flex col-12 col-lg-6 flex-column align-items-center justify-content-center">
+                  <div class="row col-12 align-items-center">
+                    <span class="col-3 col-lg-2">Format:</span>
+                    <div class="col-9 col-lg-10">
+                      <button class="btn btn-success" @click="toggleButton" data-toggle="format:image">
+                        <BootstrapIcon icon="image"/>
+                      </button>
+                      <button class="btn btn-success" @click="toggleButton" data-toggle="format:video">
+                        <BootstrapIcon icon="camera-video"/>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="col-12 mt-2 row align-items-center">
+                    <span class="col-3 col-lg-2">Typ:</span>
+                    <div class="col-9 col-lg-10">
+                      <button class="btn btn-success" @click="toggleButton" data-toggle="type:img">
+                        <BootstrapIcon icon="camera"/>
+                      </button>
+                      <button class="btn btn-success" @click="toggleButton" data-toggle="type:twitter">
+                        <BootstrapIcon icon="twitter"/>
+                      </button>
+                      <button class="btn btn-success" @click="toggleButton" data-toggle="type:reddit">
+                        <BootstrapIcon icon="reddit"/>
+                      </button>
+                      <button class="btn btn-success" @click="toggleButton" data-toggle="type:iframe">
+                        <BootstrapIcon icon="newspaper"/>
+                      </button>
+                      <button class="btn btn-success" @click="toggleButton" data-toggle="type:youtube">
+                        <BootstrapIcon icon="youtube"/>
+                      </button>
+                      <button class="btn btn-success" @click="toggleButton" data-toggle="type:link">
+                        <BootstrapIcon icon="box-arrow-up-right"/>
+                      </button>
+                    </div>
+                  </div>
                 </div>
-              </div>
-              <div class="col-12 mt-2 row align-items-center">
-                <span class="col-3 col-lg-2">Typ:</span>
-                <div class="col-9 col-lg-10">
-                  <button class="btn btn-success" @click="toggleButton" data-toggle="type:img">
-                    <BootstrapIcon icon="camera"/>
-                  </button>
-                  <button class="btn btn-success" @click="toggleButton" data-toggle="type:twitter">
-                    <BootstrapIcon icon="twitter"/>
-                  </button>
-                  <button class="btn btn-success" @click="toggleButton" data-toggle="type:reddit">
-                    <BootstrapIcon icon="reddit"/>
-                  </button>
-                  <button class="btn btn-success" @click="toggleButton" data-toggle="type:iframe">
-                    <BootstrapIcon icon="newspaper"/>
-                  </button>
-                  <button class="btn btn-success" @click="toggleButton" data-toggle="type:youtube">
-                    <BootstrapIcon icon="youtube"/>
-                  </button>
-                  <button class="btn btn-success" @click="toggleButton" data-toggle="type:link">
-                    <BootstrapIcon icon="box-arrow-up-right"/>
-                  </button>
-                </div>
-              </div>
-            </div>
-            <div class="col-12 col-lg-6">
-              <div class="row align-items-center">
-                <div class="flex-grow-1 px-5 py-4">
-                  <NoUiSlider class="py-5" :config="generateSliderConfig()" @update="updateSlider"/>
+                <div class="col-12 col-lg-6">
+                  <div class="row align-items-center">
+                    <div class="flex-grow-1 px-5 py-4">
+                      <NoUiSlider class="py-5" :config="generateSliderConfig()" @update="updateSlider"/>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -271,6 +274,16 @@ export default defineComponent({
 }
 
 #filter {
+  .filterInvisible {
+    max-height: 0;
+    transition: all .5s ease-out;
+  }
+
+  .filterVisible {
+    max-height: 22rem;
+    transition: all 1.2s ease-in-out;
+  }
+
   .filter-body {
     border: 1px solid #dee2e6;
     border-top: none;

@@ -125,7 +125,7 @@ export default defineComponent({
       town: undefined as TownData | undefined,
       prevTown: undefined as TownData | undefined,
       nextTown: undefined as TownData | undefined,
-      initialDate: new Date('2021-07-13 00:00:00')
+      initialDate: new Date('2021-07-13T00:00:00')
     }
   },
   computed: {

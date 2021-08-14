@@ -23,54 +23,63 @@
           </div>
         </div>
 
-        <div v-show="mapDataReady" class="row mb-4" id="filter">
-          <h5 @click="filterVisible = !filterVisible" class="cursor-pointer">
-            <BootstrapIcon icon="sliders"/>
-            <span class="ms-3">Filter anzeigen</span>
-          </h5>
-          <div v-show="filterVisible" @click="updateBinaryFilters" class="d-flex flex-column">
-            <div class="row align-items-center">
-              <span class="col-2 col-lg-1">Format:</span>
-              <div class="col-auto">
-                <button class="btn btn-success" @click="toggleButton" data-toggle="format:image">
-                  <BootstrapIcon icon="image"/>
-                </button>
-                <button class="btn btn-success" @click="toggleButton" data-toggle="format:video">
-                  <BootstrapIcon icon="camera-video"/>
-                </button>
+        <div v-show="mapDataReady" id="filter">
+          <div class="nav nav-tabs col-12">
+            <div class="nav-item">
+              <h5 @click="filterVisible = !filterVisible" class="cursor-pointer nav-link active">
+                <BootstrapIcon icon="sliders"/>
+                <span class="ms-3">{{ !filterVisible ? 'Filter anzeigen' : 'Filter ausblenden' }}</span>
+              </h5>
+            </div>
+          </div>
+          <div v-show="filterVisible" @click="updateBinaryFilters" class="flex-column flex-lg-row filter-body py-3 px-4"
+               style="display: flex">
+            <div class="d-flex col-12 col-lg-6 flex-column align-items-center justify-content-center">
+              <div class="row col-12 align-items-center">
+                <span class="col-3 col-lg-2">Format:</span>
+                <div class="col-9 col-lg-10">
+                  <button class="btn btn-success" @click="toggleButton" data-toggle="format:image">
+                    <BootstrapIcon icon="image"/>
+                  </button>
+                  <button class="btn btn-success" @click="toggleButton" data-toggle="format:video">
+                    <BootstrapIcon icon="camera-video"/>
+                  </button>
+                </div>
+              </div>
+              <div class="col-12 mt-2 row align-items-center">
+                <span class="col-3 col-lg-2">Typ:</span>
+                <div class="col-9 col-lg-10">
+                  <button class="btn btn-success" @click="toggleButton" data-toggle="type:img">
+                    <BootstrapIcon icon="camera"/>
+                  </button>
+                  <button class="btn btn-success" @click="toggleButton" data-toggle="type:twitter">
+                    <BootstrapIcon icon="twitter"/>
+                  </button>
+                  <button class="btn btn-success" @click="toggleButton" data-toggle="type:reddit">
+                    <BootstrapIcon icon="reddit"/>
+                  </button>
+                  <button class="btn btn-success" @click="toggleButton" data-toggle="type:iframe">
+                    <BootstrapIcon icon="newspaper"/>
+                  </button>
+                  <button class="btn btn-success" @click="toggleButton" data-toggle="type:youtube">
+                    <BootstrapIcon icon="youtube"/>
+                  </button>
+                  <button class="btn btn-success" @click="toggleButton" data-toggle="type:link">
+                    <BootstrapIcon icon="box-arrow-up-right"/>
+                  </button>
+                </div>
               </div>
             </div>
-            <div class="row align-items-center">
-              <span class="col-2 col-lg-1">Typ:</span>
-              <div class="col-auto">
-                <button class="btn btn-success" @click="toggleButton" data-toggle="type:img">
-                  <BootstrapIcon icon="camera"/>
-                </button>
-                <button class="btn btn-success" @click="toggleButton" data-toggle="type:twitter">
-                  <BootstrapIcon icon="twitter"/>
-                </button>
-                <button class="btn btn-success" @click="toggleButton" data-toggle="type:reddit">
-                  <BootstrapIcon icon="reddit"/>
-                </button>
-                <button class="btn btn-success" @click="toggleButton" data-toggle="type:iframe">
-                  <BootstrapIcon icon="newspaper"/>
-                </button>
-                <button class="btn btn-success" @click="toggleButton" data-toggle="type:youtube">
-                  <BootstrapIcon icon="youtube"/>
-                </button>
-                <button class="btn btn-success" @click="toggleButton" data-toggle="type:link">
-                  <BootstrapIcon icon="box-arrow-up-right"/>
-                </button>
-              </div>
-            </div>
-            <div class="row align-items-center">
-              <span class="col-2 col-lg-1">Datum:</span>
-              <div class="col-6">
-                <NoUiSlider class="py-5" :config="generateSliderConfig()" @update="updateSlider"/>
+            <div class="col-12 col-lg-6">
+              <div class="row align-items-center">
+                <div class="flex-grow-1 px-5 py-4">
+                  <NoUiSlider class="py-5" :config="generateSliderConfig()" @update="updateSlider"/>
+                </div>
               </div>
             </div>
           </div>
         </div>
+
         <div v-if="!mapDataReady && !error" class="alert alert-primary">Lade Karte...</div>
         <div v-if="error" class="alert alert-primary">
           <strong>Fehler:</strong> Karte kann nicht geladen werden. Überprüfe deine Netzwerkverbindung
@@ -160,7 +169,6 @@ export default defineComponent({
       return s.charAt(0).toUpperCase() + s.slice(1)
     },
     updateBinaryFilters (): void {
-      console.log('Update filters')
       this.filter.format = []
       if (document.querySelector('#filter button.btn-success[data-toggle="format:image"]')) this.filter.format.push('image')
       if (document.querySelector('#filter button.btn-success[data-toggle="format:video"]')) this.filter.format.push('video')
@@ -186,14 +194,14 @@ export default defineComponent({
       const formatter = {
         to: (num: number) => {
           const d = new Date(this.initialDate.getTime() + 86400000 * num)
-          return `${d.getDate()}.${d.getMonth() + 1}.${d.getFullYear()}`
+          return `${String(d.getDate()).padStart(2, '0')}.${String(d.getMonth() + 1).padStart(2, '0')}.${d.getFullYear()}`
         },
         from: (str: string) => {
           const parts = str.split('.')
           const d = new Date()
-          d.setFullYear(Number.parseInt(parts[2]))
-          d.setMonth(Number.parseInt(parts[1]) - 1)
-          d.setDate(Number.parseInt(parts[0]))
+          d.setFullYear(Number.parseInt(parts[2], 10))
+          d.setMonth(Number.parseInt(parts[1], 10) - 1)
+          d.setDate(Number.parseInt(parts[0], 10))
           return dayOffset(d)
         }
       }
@@ -208,8 +216,8 @@ export default defineComponent({
         tooltips: [formatter, formatter],
         pips: {
           mode: PipsMode.Count,
-          density: 3,
-          values: 5,
+          density: 6,
+          values: 4,
           format: formatter
         } as CountPips
       }
@@ -263,12 +271,17 @@ export default defineComponent({
 }
 
 #filter {
-  > div {
-    margin-left: 1rem;
+  .filter-body {
+    border: 1px solid #dee2e6;
+    border-top: none;
   }
 
   button {
     margin: 5px;
+  }
+
+  .noUi-value {
+    font-size: 0.8em;
   }
 }
 </style>

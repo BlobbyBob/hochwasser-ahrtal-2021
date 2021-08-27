@@ -1,6 +1,6 @@
 <template>
   <div id="townMap">
-    <l-map ref="maptest" style="height: 70vh" :center="[latitude, longitude]" :zoom="zoom" minZoom="13" maxZoom="19">
+    <l-map ref="maptest" style="height: 70vh; z-index: 20" :center="[latitude, longitude]" :zoom="zoom" minZoom="13" maxZoom="19">
       <l-tile-layer
         url="https://{s}.tile.osm.org/{z}/{x}/{y}.png"
         attribution="&copy; <a href='https://osm.org/copyright'>OpenStreetMap</a> contributors"

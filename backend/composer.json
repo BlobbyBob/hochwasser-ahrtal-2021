@@ -1,17 +1,18 @@
 {
-    "name": "blobbybob/hochwasser-ahrtal-2021",
-    "type": "project",
-    "license": "GPLv3",
-    "autoload": {
-        "psr-4": {
-            "BlobbyBob\\HochwasserAhrtal2021\\": "src/"
-        }
-    },
-    "require": {
-        "slim/slim": "^4.8",
-        "slim/psr7": "^1.4",
-      "ext-pdo": "*",
-      "ext-json": "*",
-        "telegram-bot/api": "^2.3"
+  "name": "blobbybob/hochwasser-ahrtal-2021",
+  "type": "project",
+  "license": "GPLv3",
+  "autoload": {
+    "psr-4": {
+      "BlobbyBob\\HochwasserAhrtal2021\\": "src/"
     }
+  },
+  "require": {
+    "slim/slim": "^4.8",
+    "slim/psr7": "^1.4",
+    "ext-pdo": "*",
+    "ext-json": "*",
+    "telegram-bot/api": "^2.3",
+    "ext-mbstring": "*"
+  }
 }

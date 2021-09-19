@@ -9,6 +9,7 @@
       <BootstrapIcon v-if="type === 'youtube'" icon="youtube" style="color: #ff0404"/>
       <BootstrapIcon v-if="type === 'link'" icon="box-arrow-up-right"/>
       <BootstrapIcon v-if="type === 'img'" icon="camera"/>
+      <BootstrapIcon v-if="type === 'vid'" icon="film" />
     </span>
     <slot></slot>
   </div>

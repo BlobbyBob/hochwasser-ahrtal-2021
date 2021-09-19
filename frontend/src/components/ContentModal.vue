@@ -12,7 +12,8 @@
       <RedditEmbed v-if="type === 'reddit'" :url="redditUrl"/>
       <IFrameEmbed v-if="type === 'iframe'" :url="iframeUrl" :height="iframeHeight"/>
       <YoutubeEmbed v-if="type === 'youtube'" :url="youtubeUrl"/>
-      <ImgEmbed v-if="type === 'img'" :url="imgUrl" :alt="title" :copyright="imgCopyright"/>
+      <ImgEmbed v-if="type === 'img'" :url="imgUrl" :alt="title" :copyright="imgCopyright" />
+      <VidEmbed v-if="type === 'vid'" :url="vidUrl" :alt="title" :copyright="vidCopyright" />
     </ModalBody>
   </Modal>
   <Modal id="complaintModal" size="xl">
@@ -75,12 +76,14 @@ import RedditEmbed from '@/components/RedditEmbed.vue'
 import YoutubeEmbed from '@/components/YoutubeEmbed.vue'
 import IFrameEmbed from '@/components/IFrameEmbed.vue'
 import ImgEmbed from '@/components/ImgEmbed.vue'
+import VidEmbed from '@/components/VidEmbed.vue'
 import ModalLink from '@/components/ModalLink.vue'
 import { postComplaint } from '@/api'
 
 @Options({
   components: {
     ImgEmbed,
+    VidEmbed,
     IFrameEmbed,
     YoutubeEmbed,
     RedditEmbed,
@@ -94,7 +97,7 @@ import { postComplaint } from '@/api'
 export default class ContentModal extends Vue {
   size: 'sm' | 'md' | 'lg' | 'xl' = 'lg'
   title = ''
-  type: 'twitter' | 'reddit' | 'iframe' | 'youtube' | 'link' | 'img' | 'blank' = 'blank'
+  type: 'twitter' | 'reddit' | 'iframe' | 'youtube' | 'link' | 'img' | 'vid' | 'blank' = 'blank'
 
   mediaId = -1
   tweetId = -1
@@ -105,12 +108,14 @@ export default class ContentModal extends Vue {
   iframeHeight = 0
   imgUrl = ''
   imgCopyright = ''
+  vidUrl = ''
+  vidCopyright = ''
 
   complaintStatus = 0
 
   // todo create explicit data type
   // eslint-disable-next-line
-  public setContent (id: number, type: 'twitter' | 'reddit' | 'iframe' | 'youtube' | 'link' | 'img' | 'blank', title: string, data: any): void {
+  public setContent (id: number, type: 'twitter' | 'reddit' | 'iframe' | 'youtube' | 'link' | 'img' | 'vid' | 'blank', title: string, data: any): void {
     this.mediaId = id
     this.type = type
     this.title = title
@@ -143,6 +148,10 @@ export default class ContentModal extends Vue {
         this.imgUrl = data.url
         this.imgCopyright = data.copyright ? data.copyright : ''
         break
+      case 'vid':
+        this.size = 'xl'
+        this.vidUrl = data.url
+        this.vidCopyright = data.copyright ? data.copyright : ''
     }
   }
 

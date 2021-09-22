@@ -14,7 +14,7 @@
           <p>
             Im Jahr 2021 gab es im Südwesten Deutschlands starke Regenfälle, die zu historischen Hochwassern in mehreren
             Gegenden geführt haben. Das Ahrtal ist eines der am härtesten betroffenen Gebiete. Auf dieser Seite sind
-            verschiedene Beiträge gesammelt, die die Ausmaße der Zerstörungen dokumentieren.
+            verschiedene Beiträge gesammelt, die die Ausmaße der Zerstörungen und den Wiederaufbau dokumentieren.
           </p>
 
           <div>

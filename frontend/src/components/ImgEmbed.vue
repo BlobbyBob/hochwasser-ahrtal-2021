@@ -5,6 +5,7 @@
     </div>
     <div v-show="copyright.length > 0" class="copyrightNotice">
       &copy; {{ copyright }}
+      <span v-show="copyrightUrl.length > 0"> | <a :href="copyrightUrl">{{ copyrightUrl }}</a></span>
     </div>
   </div>
 </template>
@@ -24,6 +25,11 @@ import { Options, Vue } from 'vue-class-component'
       type: String,
       required: false,
       default: ''
+    },
+    copyrightUrl: {
+      type: String,
+      required: false,
+      default: ''
     }
   }
 })
@@ -31,6 +37,7 @@ export default class ImgEmbed extends Vue {
   url!: string
   alt!: string
   copyright!: string
+  copyrightUrl!: string
 }
 </script>
 

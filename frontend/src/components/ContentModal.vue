@@ -12,8 +12,8 @@
       <RedditEmbed v-if="type === 'reddit'" :url="redditUrl"/>
       <IFrameEmbed v-if="type === 'iframe'" :url="iframeUrl" :height="iframeHeight"/>
       <YoutubeEmbed v-if="type === 'youtube'" :url="youtubeUrl"/>
-      <ImgEmbed v-if="type === 'img'" :url="imgUrl" :alt="title" :copyright="imgCopyright" />
-      <VidEmbed v-if="type === 'vid'" :url="vidUrl" :alt="title" :copyright="vidCopyright" />
+      <ImgEmbed v-if="type === 'img'" :url="imgUrl" :alt="title" :copyright="imgCopyright" :copyrightUrl="imgCopyrightUrl" />
+      <VidEmbed v-if="type === 'vid'" :url="vidUrl" :alt="title" :copyright="vidCopyright" :copyrightUrl="vidCopyrightUrl" />
     </ModalBody>
   </Modal>
   <Modal id="complaintModal" size="xl">
@@ -108,8 +108,10 @@ export default class ContentModal extends Vue {
   iframeHeight = 0
   imgUrl = ''
   imgCopyright = ''
+  imgCopyrightUrl = ''
   vidUrl = ''
   vidCopyright = ''
+  vidCopyrightUrl = ''
 
   complaintStatus = 0
 
@@ -147,11 +149,13 @@ export default class ContentModal extends Vue {
         this.size = 'xl'
         this.imgUrl = data.url
         this.imgCopyright = data.copyright ? data.copyright : ''
+        this.imgCopyrightUrl = data.copyrightUrl ? data.copyrightUrl : ''
         break
       case 'vid':
         this.size = 'xl'
-        this.vidUrl = data.url
+        this.vidUrl = 'https://hochwasser-ahrtal-2021.de' + data.url
         this.vidCopyright = data.copyright ? data.copyright : ''
+        this.vidCopyrightUrl = data.copyrightUrl ? data.copyrightUrl : ''
     }
   }
 

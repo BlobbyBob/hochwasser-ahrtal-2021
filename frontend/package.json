@@ -62,5 +62,10 @@
     "> 1%",
     "last 2 versions",
     "not dead"
-  ]
+  ],
+  "vue": {
+    "devServer" : {
+      "proxy": "https://hochwasser-ahrtal-2021.de"
+    }
+  }
 }

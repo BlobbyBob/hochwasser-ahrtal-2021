@@ -147,13 +147,13 @@ export default class ContentModal extends Vue {
         break
       case 'img':
         this.size = 'xl'
-        this.imgUrl = data.url
+        this.imgUrl = process.env.VUE_APP_STATIC_URL + data.url
         this.imgCopyright = data.copyright ? data.copyright : ''
         this.imgCopyrightUrl = data.copyrightUrl ? data.copyrightUrl : ''
         break
       case 'vid':
         this.size = 'xl'
-        this.vidUrl = 'https://hochwasser-ahrtal-2021.de' + data.url
+        this.vidUrl = process.env.VUE_APP_STATIC_URL + data.url
         this.vidCopyright = data.copyright ? data.copyright : ''
         this.vidCopyrightUrl = data.copyrightUrl ? data.copyrightUrl : ''
     }

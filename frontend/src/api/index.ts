@@ -71,7 +71,7 @@ export class MediaFilter {
   }
 }
 
-const apiUrl = 'https://hochwasser-ahrtal-2021.de/api'
+const apiUrl = process.env.VUE_APP_API_URL
 const cache = new NodeCache({ stdTTL: 900 })
 
 export async function getTowns (): Promise<TownData[]> {

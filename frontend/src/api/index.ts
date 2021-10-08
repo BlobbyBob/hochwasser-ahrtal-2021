@@ -50,6 +50,13 @@ export class ComplaintData {
   gdpr!: string
 }
 
+export class CorrectionData {
+  media!: number
+  name!: string
+  latitude!: number
+  longitude!: number
+}
+
 export class MediaFilter {
   format?: ('image' | 'video')[]
   type?: ('twitter' | 'reddit' | 'youtube' | 'iframe' | 'link' | 'img')[]
@@ -173,4 +180,17 @@ export async function postComplaint (complaint: ComplaintData | { [k: string]: F
     },
     body: JSON.stringify(complaint)
   })
+}
+
+export async function postCorrection (correction: CorrectionData | { [k: string]: FormDataEntryValue }): Promise<Response> {
+  console.log(correction)
+  return new Promise(resolve => resolve(new Response()))
+  // return fetch(apiUrl + '/correction', {
+  //   method: 'POST',
+  //   mode: 'cors',
+  //   headers: {
+  //     'Content-Type': 'application/json'
+  //   },
+  //   body: JSON.stringify(correction)
+  // })
 }

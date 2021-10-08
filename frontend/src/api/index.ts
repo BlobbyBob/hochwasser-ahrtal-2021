@@ -160,14 +160,14 @@ export async function postContact (contact: ContactData | { [k: string]: FormDat
   })
 }
 
-export async function postPersonalMedia (complaint: PersonalMediaData | { [k: string]: FormDataEntryValue }): Promise<Response> {
+export async function postPersonalMedia (personalMedia: PersonalMediaData | { [k: string]: FormDataEntryValue }): Promise<Response> {
   return fetch(apiUrl + '/personal', {
     method: 'POST',
     mode: 'cors',
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify(complaint)
+    body: JSON.stringify(personalMedia)
   })
 }
 
@@ -183,14 +183,12 @@ export async function postComplaint (complaint: ComplaintData | { [k: string]: F
 }
 
 export async function postCorrection (correction: CorrectionData | { [k: string]: FormDataEntryValue }): Promise<Response> {
-  console.log(correction)
-  return new Promise(resolve => resolve(new Response()))
-  // return fetch(apiUrl + '/correction', {
-  //   method: 'POST',
-  //   mode: 'cors',
-  //   headers: {
-  //     'Content-Type': 'application/json'
-  //   },
-  //   body: JSON.stringify(correction)
-  // })
+  return fetch(apiUrl + '/correction', {
+    method: 'POST',
+    mode: 'cors',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(correction)
+  })
 }

@@ -136,7 +136,7 @@ import VidEmbed from '@/components/VidEmbed.vue'
 import ModalLink from '@/components/ModalLink.vue'
 import { postComplaint, postCorrection } from '@/api'
 import { LMap, LMarker, LTileLayer } from '@vue-leaflet/vue-leaflet'
-import { LatLngLiteral } from 'leaflet'
+import { LatLngLiteral, LatLngTuple } from 'leaflet'
 
 @Options({
   components: {
@@ -184,7 +184,7 @@ export default class ContentModal extends Vue {
 
   // todo create explicit data type
   // eslint-disable-next-line
-  public setContent (id: number, type: 'twitter' | 'reddit' | 'iframe' | 'youtube' | 'link' | 'img' | 'vid' | 'blank', title: string, data: any): void {
+  public setContent (id: number, type: 'twitter' | 'reddit' | 'iframe' | 'youtube' | 'link' | 'img' | 'vid' | 'blank', title: string, latlng: LatLngTuple, data: any): void {
     this.mediaId = id
     this.type = type
     this.title = title
@@ -279,7 +279,7 @@ export default class ContentModal extends Vue {
     const component = this
     if (m) {
       m.addEventListener('hidden.bs.modal', () => {
-        component.setContent(-1, 'blank', '', {})
+        component.setContent(-1, 'blank', '', [50.44881, 6.88879], {})
       })
     }
   }

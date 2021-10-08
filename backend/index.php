@@ -1,6 +1,7 @@
 <?php
 
 use BlobbyBob\HochwasserAhrtal2021\Complaint;
+use BlobbyBob\HochwasserAhrtal2021\Correction;
 use BlobbyBob\HochwasserAhrtal2021\Contact;
 use BlobbyBob\HochwasserAhrtal2021\Media;
 use BlobbyBob\HochwasserAhrtal2021\PersonalMedia;
@@ -163,6 +164,15 @@ $app->post('/api/complaint', function (Request $request, Response $response) {
         'INSERT INTO complaints (name, email, request, media) VALUES (?, ?, ?, ?)',
         function (Complaint $complaint) {
             return [$complaint->name, $complaint->email, $complaint->request, $complaint->media];
+        });
+});
+
+$app->post('/api/correction', function (Request $request, Response $response) {
+
+    return postHelper($request, $response, Correction::class,
+        'INSERT INTO corrections (media, title, latitude, longitude) VALUES (?, ?, ?, ?)',
+        function (Correction $correction) {
+            return [$correction->media, $correction->name, $correction->latitude, $correction->longitude];
         });
 });
 

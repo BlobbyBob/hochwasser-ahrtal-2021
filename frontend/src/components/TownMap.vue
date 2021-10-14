@@ -1,6 +1,6 @@
 <template>
   <div id="townMap">
-    <l-map ref="maptest" style="height: 70vh; z-index: 20" :center="[latitude, longitude]" :zoom="zoom" :minZoom="13"
+    <l-map ref="leafletTownMap" style="height: 70vh; z-index: 20" :center="[latitude, longitude]" :zoom="zoom" :minZoom="13"
            :maxZoom="19">
       <l-tile-layer
         url="https://{s}.tile.osm.org/{z}/{x}/{y}.png"
@@ -141,7 +141,7 @@ export default class TownMap extends Vue {
   updated (): void {
     // Possible leaflet or vue-leaflet bug:
     // Sometimes map center is not correctly set when updating to another location
-    const map = (this.$refs.maptest as LMap).leafletObject
+    const map = (this.$refs.leafletTownMap as LMap).leafletObject
     map.setView([this.latitude, this.longitude])
     this.drawMap()
   }

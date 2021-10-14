@@ -105,7 +105,7 @@
           </label>
           <input type="hidden" name="latitude" :value="latitudeNew">
           <input type="hidden" name="longitude" :value="longitudeNew">
-          <l-map style="height: 40vh; z-index: 20" :center="[latitude, longitude]" :zoom="14"
+          <l-map ref="leafletCorrectionMap" style="height: 40vh; z-index: 20" :center="[latitude, longitude]" :zoom="14"
                  :minZoom="13" :maxZoom="19">
             <l-tile-layer
               url="https://{s}.tile.osm.org/{z}/{x}/{y}.png"
@@ -280,6 +280,15 @@ export default class ContentModal extends Vue {
     if (m) {
       m.addEventListener('hidden.bs.modal', () => {
         component.setContent(-1, 'blank', '', [50.44881, 6.88879], {})
+      })
+    }
+
+    // Recalculate map container with invalidateSize() after the correction modal is opened
+    const correctionModal = document.getElementById('correctionModal')
+    if (correctionModal) {
+      correctionModal.addEventListener('shown.bs.modal', () => {
+        var correctionMap = (this.$refs.leafletCorrectionMap as LMap).leafletObject
+        correctionMap.invalidateSize()
       })
     }
   }

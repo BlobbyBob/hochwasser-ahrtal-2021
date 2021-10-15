@@ -190,6 +190,9 @@ export default class ContentModal extends Vue {
     this.title = title
     this.complaintStatus = 0
 
+    this.latitude = this.latitudeNew = latlng[0]
+    this.longitude = this.longitudeNew = latlng[1]    
+
     switch (type) {
       case 'twitter':
         this.size = 'md'

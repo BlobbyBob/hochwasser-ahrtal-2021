@@ -55,4 +55,16 @@ CREATE TABLE personalMedia
     name    varchar(128)     NOT NULL,
     email   varchar(128)     NOT NULL,
     request text             NOT NULL
+);
+
+CREATE TABLE corrections
+(
+    id        INTEGER UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    date      DATETIME         NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    media     INTEGER UNSIGNED NOT NULL,
+    title     VARCHAR(256)     NOT NULL,
+    latitude  FLOAT            NOT NULL,
+    longitude FLOAT            NOT NULL,
+    done      BOOLEAN          NOT NULL DEFAULT 0,
+    FOREIGN KEY `fk_corrections_media` (`media`) REFERENCES `media` (`id`) ON UPDATE CASCADE
 )

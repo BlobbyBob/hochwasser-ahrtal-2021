@@ -1,6 +1,7 @@
 <?php
 
 use BlobbyBob\HochwasserAhrtal2021\Complaint;
+use BlobbyBob\HochwasserAhrtal2021\Correction;
 use BlobbyBob\HochwasserAhrtal2021\Contact;
 use BlobbyBob\HochwasserAhrtal2021\Media;
 use BlobbyBob\HochwasserAhrtal2021\PersonalMedia;
@@ -98,7 +99,7 @@ $app->get('/api/media/{town}', function (Request $request, Response $response, a
     return $response->withHeader('Content-Type', 'application/json');
 });
 
-function postHelper(Request $request, Response $response, $class, $query, $getParams)
+function postHelper(Request $request, Response $response, $class, $query, $getParams, $gdprOptional = false)
 {
     $contentType = $request->getHeaderLine('Content-Type');
     $response = $response->withHeader('Accept', 'application/json');
@@ -112,7 +113,7 @@ function postHelper(Request $request, Response $response, $class, $query, $getPa
         return $response->withStatus(400, 'Bad Request');
     }
 
-    if (!isset($data['gdpr'])) {
+    if (!isset($data['gdpr']) && !$gdprOptional) {
         return $response->withStatus(409, 'Conflict');
     }
 
@@ -164,6 +165,16 @@ $app->post('/api/complaint', function (Request $request, Response $response) {
         function (Complaint $complaint) {
             return [$complaint->name, $complaint->email, $complaint->request, $complaint->media];
         });
+});
+
+$app->post('/api/correction', function (Request $request, Response $response) {
+
+    return postHelper($request, $response, Correction::class,
+        'INSERT INTO corrections (media, title, latitude, longitude) VALUES (?, ?, ?, ?)',
+        function (Correction $correction) {
+            return [$correction->media, $correction->name, $correction->latitude, $correction->longitude];
+        }, 
+        true);
 });
 
 

@@ -1,6 +1,7 @@
 <template>
   <div id="townMap">
-    <l-map ref="maptest" style="height: 70vh; z-index: 20" :center="[latitude, longitude]" :zoom="zoom" minZoom="13" maxZoom="19">
+    <l-map ref="leafletTownMap" style="height: 70vh; z-index: 20" :center="[latitude, longitude]" :zoom="zoom" :minZoom="13"
+           :maxZoom="19">
       <l-tile-layer
         url="https://{s}.tile.osm.org/{z}/{x}/{y}.png"
         attribution="&copy; <a href='https://osm.org/copyright'>OpenStreetMap</a> contributors"
@@ -15,7 +16,7 @@
                   <a :href="JSON.parse(popup.data).url" target="_blank">{{ popup.title }}
                     ({{ dateFormat(new Date(popup.timestamp)) }})</a>
                 </div>
-                <ModalLink v-if="popup.type !== 'link'" target="#contentModal" @click="handlePopupClick(popup)">
+                <ModalLink v-if="popup.type !== 'link'" target="#contentModal" @click="handlePopupClick(popup, group.latLng)">
                   {{ popup.title }} ({{ dateFormat(new Date(popup.timestamp)) }})
                 </ModalLink>
               </ContentRef>
@@ -30,7 +31,7 @@
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
 import 'leaflet/dist/leaflet.css'
-import L from 'leaflet'
+import L, { LatLngTuple } from 'leaflet'
 import { getMedia, MediaData, MediaFilter } from '@/api'
 import { LMap, LMarker, LPopup, LTileLayer } from '@vue-leaflet/vue-leaflet'
 import ModalLink from '@/components/ModalLink.vue'
@@ -51,7 +52,7 @@ L.Icon.Default.mergeOptions({
 
 class GroupedMediaData {
   n!: number
-  latLng!: [number, number]
+  latLng!: LatLngTuple
   media!: MediaData[]
 }
 
@@ -84,8 +85,8 @@ export default class TownMap extends Vue {
   longitude!: number
   zoom!: number
 
-  handlePopupClick (item: MediaData): void {
-    if (this.$parent) (this.$parent.$refs.mainContentModal as ContentModal).setContent(item.id, item.type, item.title, JSON.parse(item.data))
+  handlePopupClick (item: MediaData, latlng: LatLngTuple): void {
+    if (this.$parent) (this.$parent.$refs.mainContentModal as ContentModal).setContent(item.id, item.type, item.title, latlng, JSON.parse(item.data))
   }
 
   groupAndPlaceMarkers (list: MediaData[]): void {
@@ -140,7 +141,7 @@ export default class TownMap extends Vue {
   updated (): void {
     // Possible leaflet or vue-leaflet bug:
     // Sometimes map center is not correctly set when updating to another location
-    const map = (this.$refs.maptest as LMap).leafletObject
+    const map = (this.$refs.leafletTownMap as LMap).leafletObject
     map.setView([this.latitude, this.longitude])
     this.drawMap()
   }

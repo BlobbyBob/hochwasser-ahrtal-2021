@@ -99,7 +99,7 @@ $app->get('/api/media/{town}', function (Request $request, Response $response, a
     return $response->withHeader('Content-Type', 'application/json');
 });
 
-function postHelper(Request $request, Response $response, $class, $query, $getParams)
+function postHelper(Request $request, Response $response, $class, $query, $getParams, $gdprOptional = false)
 {
     $contentType = $request->getHeaderLine('Content-Type');
     $response = $response->withHeader('Accept', 'application/json');
@@ -113,7 +113,7 @@ function postHelper(Request $request, Response $response, $class, $query, $getPa
         return $response->withStatus(400, 'Bad Request');
     }
 
-    if (!isset($data['gdpr'])) {
+    if (!isset($data['gdpr']) && !$gdprOptional) {
         return $response->withStatus(409, 'Conflict');
     }
 
@@ -173,7 +173,8 @@ $app->post('/api/correction', function (Request $request, Response $response) {
         'INSERT INTO corrections (media, title, latitude, longitude) VALUES (?, ?, ?, ?)',
         function (Correction $correction) {
             return [$correction->media, $correction->name, $correction->latitude, $correction->longitude];
-        });
+        }, 
+        true);
 });
 
 

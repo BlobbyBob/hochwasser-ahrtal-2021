@@ -191,7 +191,7 @@ export default class ContentModal extends Vue {
     this.complaintStatus = 0
 
     this.latitude = this.latitudeNew = latlng[0]
-    this.longitude = this.longitudeNew = latlng[1]    
+    this.longitude = this.longitudeNew = latlng[1]
 
     switch (type) {
       case 'twitter':
@@ -271,7 +271,7 @@ export default class ContentModal extends Vue {
     }
   }
 
-  correctionMarkerMove (e: {latlng: LatLngLiteral}): void {
+  correctionMarkerMove (e: { latlng: LatLngLiteral }): void {
     this.latitudeNew = e.latlng.lat
     this.longitudeNew = e.latlng.lng
   }

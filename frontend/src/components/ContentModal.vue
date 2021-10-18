@@ -98,7 +98,7 @@
           <label class="form-label" for="mediaInput">
             Beitragsname:
           </label>
-          <input type="text" class="form-control" name="name" maxlength="256" id="mediaInput" :value="title" required>
+          <input type="text" class="form-control" name="name" maxlength="256" id="mediaInput" v-model="title" required>
 
           <label class="form-label">
             Position:

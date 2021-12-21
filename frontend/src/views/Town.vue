@@ -224,7 +224,6 @@ export default defineComponent({
           format: formatter
         } as CountPips
       }
-      console.log(options)
       return options
     },
     updateSlider (vals: string[2]): void {
